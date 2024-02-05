@@ -59,13 +59,11 @@ public:
 		textureManager_ = texManager;
 	}
 
-private:
+	ParticleProperty NewParticle();
 
-	WinApp* winApp_;
-	DirectXCommon* directX_;
-	CreateResources* CResource_;
-	TextureManager* textureManager_=nullptr;
+private:
 	GraphicsPipelineManager* particlePSO_=nullptr;
+	TextureManager* textureManager_ = nullptr;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
 	Microsoft::WRL::ComPtr<ID3D12Resource>transformationMatrixSprite;
@@ -75,6 +73,8 @@ private:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU;
 	D3D12_GPU_DESCRIPTOR_HANDLE instancingSrvHandleGPU;
+
+	Microsoft::WRL::ComPtr<ID3D12Resource>vertexResourceSprite_=nullptr;
 
 };
 

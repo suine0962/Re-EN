@@ -36,7 +36,8 @@ private:
 	static SPSOProperty CreateLine(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 	static SPSOProperty CreateSprite(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 
-
+	
+	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc_{};
 	SPSO pso = {};
 
 };

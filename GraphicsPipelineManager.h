@@ -32,9 +32,9 @@ public:
 private:
 
 	static void CreatePSO();
-	static  SPSOProperty CreateShape(ComPtr<ID3D12Device>device,Commands command,SShaderMode shader);
-	static SPSOProperty CreateLine(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
-	static SPSOProperty CreateSprite(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
+	static  SPSOProperty CreateShapePSO(ComPtr<ID3D12Device>device,Commands command,SShaderMode shader);
+	static SPSOProperty CreateLinePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
+	static SPSOProperty CreateSpritePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 
 
 	SPSO pso = {};

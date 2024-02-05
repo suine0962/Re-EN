@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sprite->SetColor({ 1,1,1,1.0f });
 	WorldTransform SpriteWorldTransform = {};
 	SpriteWorldTransform.Initialize();
-
+	SpriteWorldTransform.translate = { 0,0,0 };
 	WorldTransform worldTransform = {};
 	worldTransform.Initialize();
 

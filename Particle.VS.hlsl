@@ -3,7 +3,7 @@
 struct TransformationMatrix {
 	float32_t4x4 WVP;
 };
-StructuredBuffer<TransformationMatrix > gTransformationMatrix  : register(t0);
+StructuredBuffer<TransformationMatrix> gTransformationMatrices  : register(t0);
 
 
 

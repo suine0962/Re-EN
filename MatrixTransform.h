@@ -92,7 +92,11 @@ public:
 	/// <param name="移動"></param>
 	static Matrix4x4 AffineMatrix(const Vector3& Sv, const Vector3& Rv, const Vector3& Tv);
 
+
+	static Matrix4x4 MakeIdenttity4x4()
 #pragma endregion
 private:
 
 };
+
+

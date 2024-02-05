@@ -20,19 +20,19 @@ void GraphicsPipelineManager::CreatePSO()
 	SShaders shader = ShaderManager::Getinstance()->GetShader();
 	SPSO pso;
 
-	pso.shape=CreateShape(device.Get(), commands, shader.shape);
+	pso.shape=CreateShapePSO(device.Get(), commands, shader.shape);
 	LogManager::CompliteLog("CreateShapePSO");
 
-	pso.Line = CreateLine(device.Get(), commands, shader.shape);
+	pso.Line = CreateLinePSO(device.Get(), commands, shader.shape);
 	LogManager::CompliteLog("CreateLinePSO");
 
-	pso.Sprite = CreateSprite(device.Get(), commands, shader.sprite);
+	pso.Sprite = CreateSpritePSO(device.Get(), commands, shader.sprite);
 	LogManager::CompliteLog("CreateSpritePSO");
 
 	GraphicsPipelineManager::GetInstance()->pso = pso;
 }
 
-SPSOProperty GraphicsPipelineManager::CreateShape(ComPtr<ID3D12Device> device, Commands command, SShaderMode shader)
+SPSOProperty GraphicsPipelineManager::CreateShapePSO(ComPtr<ID3D12Device> device, Commands command, SShaderMode shader)
 {
 	SPSOProperty result;
 
@@ -156,7 +156,7 @@ SPSOProperty GraphicsPipelineManager::CreateShape(ComPtr<ID3D12Device> device, C
 	return result;
 }
 
-SPSOProperty GraphicsPipelineManager::CreateLine(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader)
+SPSOProperty GraphicsPipelineManager::CreateLinePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader)
 {
 	SPSOProperty result;
 
@@ -279,7 +279,7 @@ SPSOProperty GraphicsPipelineManager::CreateLine(ComPtr<ID3D12Device>device, Com
 	return result;
 }
 
-SPSOProperty GraphicsPipelineManager::CreateSprite(ComPtr<ID3D12Device> device, Commands commands, SShaderMode shader)
+SPSOProperty GraphicsPipelineManager::CreateSpritePSO(ComPtr<ID3D12Device> device, Commands commands, SShaderMode shader)
 {
 	SPSOProperty SpritePSO;
 	
