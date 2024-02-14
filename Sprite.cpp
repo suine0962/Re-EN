@@ -1,4 +1,4 @@
-﻿#include "Sprite.h"
+#include "Sprite.h"
 
 void Sprite::Initialize(ISpriteState* state, Vector2 pos, Vector2 size)
 {

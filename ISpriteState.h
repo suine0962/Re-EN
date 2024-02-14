@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"WorldTransform.h"
 #include"ViewProjection.h"
 

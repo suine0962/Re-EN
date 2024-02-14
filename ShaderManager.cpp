@@ -1,4 +1,4 @@
-﻿#include "ShaderManager.h"
+#include "ShaderManager.h"
 
 ShaderManager* ShaderManager::Getinstance()
 {
@@ -99,20 +99,20 @@ void ShaderManager::ShapeShader()
 	SShaders shaders;
 	shaders.shape.vertexBlob =
 		ShaderManager::CompilerShaderFanc(
-			L"Resources/Shader/ShapeObject3d.VS.hlsl",
+			L"ShapeObject3d.VS.hlsl",
 			L"vs_6_0");
 	shaders.shape.pixelBlob =
 		ShaderManager::CompilerShaderFanc(
-			L"Resources/Shader/ShapeObject3d.PS.hlsl",
+			L"ShapeObject3d.PS.hlsl",
 			L"ps_6_0");
 	shaders.sprite.vertexBlob =
 		ShaderManager::CompilerShaderFanc(
-			L"Resources/Shader/SpriteObject3d.VS.hlsl",
+			L"SpriteObject3d.VS.hlsl",
 			L"vs_6_0");
 	
 	shaders.sprite.pixelBlob=
 		ShaderManager::CompilerShaderFanc(
-			L"Resources/Shader/SpriteObject3d.PS.hlsl",
+			L"SpriteObject3d.PS.hlsl",
 			L"ps_6_0");
 
 

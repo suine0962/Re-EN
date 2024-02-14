@@ -392,8 +392,7 @@ Matrix4x4 MatrixTransform::AffineMatrix(const Vector3& Sv, const Vector3& Rv, co
 	return result;
 }
 
-
-Matrix4x4 MakeIdenttity4x4()
+Matrix4x4 MatrixTransform::MakeIdenttity4x4()
 {
 	Matrix4x4 result;
 

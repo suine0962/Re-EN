@@ -3,13 +3,16 @@
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	Suine::Initialize();
+	Input::GetInstance();
+
 	unique_ptr<Model> model = make_unique< Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
 
-	uint32_t texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
-	uint32_t BlockTexHandle = TextureManager::LoadTexture("Resources/block.png");
 
-	model->CreateFromObj("Axis");
+	uint32_t texHandle = TextureManager::LoadTexture("Resource/uvChecker.png");
+	uint32_t BlockTexHandle = TextureManager::LoadTexture("Resource/arrow.png");
+
+	model->CreateFromObj("colisionCube");
 	sprite->Initialize(new SpriteBoxState, { 0,0 }, { 500,200 });
 	sprite->SetTexHandle(BlockTexHandle);
 	sprite->SetColor({ 1,1,1,1.0f });
@@ -54,6 +57,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ImGui::DragFloat3("uvrotate", &uvrotate.x, 0.1f);
 		ImGui::DragFloat3("uvTrans", &uvtranslate.x, 0.1f);
 		ImGui::End();
+
+		if(Input::GetInstance()->PressKey(DIK_D))
+		{
+
+		}
 
 		model->SetUvRotate(uvrotate);
 		model->SetUvScale(uvScale);

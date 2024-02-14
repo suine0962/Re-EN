@@ -8,7 +8,7 @@
 #include "MatrixTransform.h"
 #include "ImGuiManager.h"
 #include "TextureManager.h"
-#include "ParticlePipelineManager.h"
+//#include "ParticlePipelineManager.h"
 
 #include "CreateResource.h"
 #include <numbers>

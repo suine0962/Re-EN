@@ -116,7 +116,7 @@ void ModelSphereState::CommandCall(uint32_t texHandle)
 {
 
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
-	SPSOProperty PSO = {};
+	PSOProperty PSO = {};
 
 	if (texHandle == 0)
 	{

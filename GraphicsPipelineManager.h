@@ -4,7 +4,7 @@
 #include"ShaderManager.h"
 
 
-struct SPSOProperty
+struct PSOProperty
 {
 	ComPtr<ID3D12PipelineState> GraphicsPipelineState = nullptr;
 	ComPtr<ID3D12RootSignature> rootSignature = nullptr;
@@ -13,11 +13,11 @@ struct SPSOProperty
 
 };
 
-struct SPSO
+struct PSO
 {
-	SPSOProperty shape;
-	SPSOProperty Line;
-	SPSOProperty Sprite;
+	PSOProperty shape;
+	PSOProperty Line;
+	PSOProperty Sprite;
 };
 
 class GraphicsPipelineManager
@@ -27,17 +27,17 @@ public:
 	static GraphicsPipelineManager* GetInstance();
 
 	static void Initialize();
-    SPSO GetPso() { return pso; }
+    PSO GetPso() { return pso; }
 
 private:
 
 	static void CreatePSO();
-	static  SPSOProperty CreateShapePSO(ComPtr<ID3D12Device>device,Commands command,SShaderMode shader);
-	static SPSOProperty CreateLinePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
-	static SPSOProperty CreateSpritePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
+	static  PSOProperty CreateShapePSO(ComPtr<ID3D12Device>device,Commands command,SShaderMode shader);
+	static PSOProperty CreateLinePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
+	static PSOProperty CreateSpritePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 
 
-	SPSO pso = {};
+	PSO pso = {};
 
 };
 

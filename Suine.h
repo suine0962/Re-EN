@@ -1,5 +1,5 @@
-﻿#pragma once
-#include"Pch.h"
+#pragma once
+#include"Vsh.h"
 #include"WinApp.h"
 #include"DirectXCommon.h"
 #include"ShaderManager.h"
@@ -9,6 +9,7 @@
 #include"DebugTools.h"
 #include"TextureManager.h"
 #include"Sprite.h"
+#include"input.h"
 
 class Suine
 {

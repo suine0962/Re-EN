@@ -37,7 +37,7 @@ void ModelLineState::Draw(Model* state, WorldTransform worldTransform, ViewProje
 void ModelLineState::CommandCall()
 {
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
-	SPSOProperty PSO = GraphicsPipelineManager::GetInstance()->GetPso().Line;
+	PSOProperty PSO = GraphicsPipelineManager::GetInstance()->GetPso().Line;
 
 
 	commands.m_pList->SetGraphicsRootSignature(PSO.rootSignature.Get());

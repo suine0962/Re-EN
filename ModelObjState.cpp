@@ -26,7 +26,7 @@ void ModelObjState::Draw(Model* state, WorldTransform worldTransform, ViewProjec
 
 	worldTransform.TransfarMatrix(resource_.wvpResource, viewprojection);
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
-	SPSOProperty PSO = GraphicsPipelineManager::GetInstance()->GetPso().Sprite;
+	PSOProperty PSO = GraphicsPipelineManager::GetInstance()->GetPso().Sprite;
 
 	commands.m_pList->SetGraphicsRootSignature(PSO.rootSignature.Get());
 	commands.m_pList->SetPipelineState(PSO.GraphicsPipelineState.Get());
@@ -52,7 +52,7 @@ SModelData ModelObjState::LoadFile(Model *state,const string& directoryPath)
 	vector<Vector3> normals;
 	vector<Vector2> texcoords;
 	string line;
-	ifstream file("Resources/" + directoryPath + "/" + directoryPath + ".obj");
+	ifstream file("Resource/" + directoryPath + "/" + directoryPath + ".obj");
 	assert(file.is_open());
 
 	while (getline(file, line))

@@ -1,4 +1,4 @@
-﻿#include "input.h"
+#include "input.h"
 
 Input* Input::GetInstance() {
 	static Input instance;
@@ -72,9 +72,9 @@ bool Input::ReleaseKey(BYTE keyNumber)const {
 }
 
 bool Input::GetJoystickState(int32_t stickNo, XINPUT_STATE& state) {
-	DWORD result = XInputGetState(stickNo, &state);
-
-	return result == ERROR_SUCCESS;
+	//DWORD result = XInputGetState(stickNo, &state);
+	//result == ERROR_SUCCESS;
+	return 0;
 }
 
 // デッドゾーンを適用する関数

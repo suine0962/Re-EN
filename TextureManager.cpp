@@ -1,4 +1,4 @@
-﻿#include"TextureManager.h"
+#include"TextureManager.h"
 
 TextureManager::TextureManager()
 {
@@ -31,11 +31,13 @@ void TextureManager::Finalize()
 	CoUninitialize();
 
 }
+
 TextureManager* TextureManager::GetInstance()
 {
 	static TextureManager instance;
 	return &instance;
 }
+
 DirectX::ScratchImage TextureManager::CreateMipImage(const std::string& filePath)
 {
 	//テクスチャファイルを読み込みプログラムで扱えるようにする
@@ -46,12 +48,13 @@ DirectX::ScratchImage TextureManager::CreateMipImage(const std::string& filePath
 	//ミップマップの作成
 	DirectX::ScratchImage mipImage{};
 	hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImage);
+	assert(SUCCEEDED(hr));
 
 	return mipImage;
 
 }
 
-void TextureManager::UploadTexData( const DirectX::ScratchImage& mipImage)
+void TextureManager::UploadTexData(const DirectX::ScratchImage& mipImage)
 {
 	const DirectX::TexMetadata& metadata = mipImage.GetMetadata();
 
@@ -59,13 +62,13 @@ void TextureManager::UploadTexData( const DirectX::ScratchImage& mipImage)
 	{
 		const DirectX::Image* img = mipImage.GetImage(mipLevel, 0, 0);
 		TextureManager::GetInstance()->tex[indexTex].Resource->
-		WriteToSubresource(
-			UINT(mipLevel),
-			nullptr,
-			img->pixels,
-			UINT(img->rowPitch),
-			UINT(img->slicePitch)
-		);
+			WriteToSubresource(
+				UINT(mipLevel),
+				nullptr,
+				img->pixels,
+				UINT(img->rowPitch),
+				UINT(img->slicePitch)
+			);
 	}
 
 }
@@ -76,12 +79,14 @@ D3D12_CPU_DESCRIPTOR_HANDLE TextureManager::GetCPUDescriptorHandle(ComPtr<ID3D12
 	return handleCPU;
 
 }
+
 D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(ComPtr<ID3D12DescriptorHeap> descripterHeap, uint32_t desiripterSize, uint32_t index)
 {
 	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descripterHeap->GetGPUDescriptorHandleForHeapStart();
 	handleGPU.ptr += (desiripterSize * index);
 	return handleGPU;
 }
+
 D3D12_RESOURCE_DESC TextureManager::SettingResource(const DirectX::TexMetadata& metadata)
 {
 	D3D12_RESOURCE_DESC resourceDesc{};
@@ -160,7 +165,7 @@ uint32_t TextureManager::LoadTexture(const std::string& filePath)
 	TextureManager::GetInstance()->tex[indexTex].SrvHandleGPU.ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(TextureManager::GetInstance()->tex[indexTex].Resource.Get(), &srvDesc, TextureManager::GetInstance()->tex[indexTex].SrvHandleCPU);
 
-	
+
 	return indexTex;
 }
 

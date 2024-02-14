@@ -1,5 +1,5 @@
-﻿#pragma once
-#include"Pch.h"
+#pragma once
+#include"Vsh.h"
 #include"MatrixTransform.h"
 #include"CreateResource.h"
 #include"ViewProjection.h"

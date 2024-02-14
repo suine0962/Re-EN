@@ -1,5 +1,5 @@
 #include "Particle.h"
-#include "MatrixTransform.h"
+
 
 Particle::Particle() {};
 
@@ -25,8 +25,8 @@ void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 
 	//単位行列を書き込んでおく
 	for (uint32_t index = 0; index < kNunInstance; ++index) {
-		instancingData[index].WVP = MatrixTransform::MakeIdenttity4x4();
-		instancingData[index].world =MatrixTransform:: MakeIdenttity4x4();
+		instancingData[index].WVP = MatrixTransform::Identity();
+		instancingData[index].world =MatrixTransform::Identity();
 	}
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
@@ -39,7 +39,7 @@ void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 	instancingSrvDesc.Buffer.NumElements = kNunInstance;
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
 
-	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU = DirectXCommon::GetInstance()->GetSrvHeap().
+	//D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU = DirectXCommon::GetInstance()->GetSrvHeap();
 
 }
 

@@ -1,14 +1,15 @@
 #pragma once
-#include"Pch.h"
+#include "DirectXTex/DirectXTex/d3dx12.h"
+#include"Vsh.h"
 #include"DirectXCommon.h"
 #include"WinApp.h"
+#include <vector>
 
 struct texResourceProperty
 {
 	D3D12_CPU_DESCRIPTOR_HANDLE SrvHandleCPU;
 	D3D12_GPU_DESCRIPTOR_HANDLE SrvHandleGPU;
 	ComPtr<ID3D12Resource> Resource;
-
 };
 
 struct DescriptorSize
@@ -47,6 +48,7 @@ private:
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ComPtr<ID3D12DescriptorHeap> descripterHeap, uint32_t desiripterSize, uint32_t index);
 
 	static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ComPtr<ID3D12DescriptorHeap> descripterHeap, uint32_t desiripterSize, uint32_t index);
+
 
 
 	/// <summary>
