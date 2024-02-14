@@ -10,7 +10,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	uint32_t texHandle = TextureManager::LoadTexture("Resource/uvChecker.png");
-	uint32_t BlockTexHandle = TextureManager::LoadTexture("Resource/arrow.png");
+	uint32_t BlockTexHandle = TextureManager::LoadTexture("Resource/colisionCube/tex.png");
 
 	model->CreateFromObj("colisionCube");
 	sprite->Initialize(new SpriteBoxState, { 0,0 }, { 500,200 });
@@ -48,7 +48,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		ImGui::End();
 
-		ImGui::Begin("Axis");
+		ImGui::Begin("colision");
 		ImGui::DragFloat3("scale", &worldTransform.scale.x, 0.1f);
 		ImGui::DragFloat3("rotate", &worldTransform.rotation.x, 0.1f);
 		ImGui::DragFloat3("trans", &worldTransform.translate.x, 0.1f);
@@ -58,10 +58,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ImGui::DragFloat3("uvTrans", &uvtranslate.x, 0.1f);
 		ImGui::End();
 
-		if(Input::GetInstance()->PressKey(DIK_D))
-		{
-
-		}
+		
 
 		model->SetUvRotate(uvrotate);
 		model->SetUvScale(uvScale);
@@ -71,8 +68,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		viewProjection.UpdateMatrix();
 		SpriteWorldTransform.UpdateMatrix();
 		DebugTools::SetViewProjection(viewProjection);
-		DebugTools::Execute(0);;
+		DebugTools::Execute(0);
 
+		if (Input::GetInstance()->PressKey(DIK_D))
+		{
+			worldTransform.translate.x += 2.0f;
+		}
 
 		model->Draw(worldTransform, viewProjection);
 		sprite->Draw(SpriteWorldTransform);

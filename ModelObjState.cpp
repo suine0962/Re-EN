@@ -129,7 +129,7 @@ MaterialData ModelObjState::LoadMaterialTemplateFile(const string& directoryPath
 {
 	MaterialData materialData;
 	string line;
-	ifstream file("Resources/" + directoryPath + "/" + filename);
+	ifstream file("Resource/" + directoryPath + "/" + filename);
 	assert(file.is_open());
 	while (getline(file, line))
 	{
@@ -141,7 +141,7 @@ MaterialData ModelObjState::LoadMaterialTemplateFile(const string& directoryPath
 		{
 			string texfilename;
 			s >> texfilename;
-			materialData.textureFilePath = "Resources/" + directoryPath + "/" + texfilename;
+			materialData.textureFilePath = "Resource/" + directoryPath + "/" + texfilename;
 
 		}
 	}

@@ -16,7 +16,7 @@ void WinApp::Initialize()
 	WinApp::GetInstance()->hwnd_= CreateWIND(
 		WinApp::GetInstance()->kWindowWidth,
 		WinApp::GetInstance()->kWindowHeight,
-		L"CLEYERA",
+		L"SUINE",
 		WinApp::GetInstance()->wc_);
 	ShowWindow(WinApp::GetInstance()->hwnd_, SW_SHOW);
 	timeBeginPeriod(1);
