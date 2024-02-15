@@ -5,11 +5,10 @@
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 
-#include "WinApp.h"
+
 #include <array>
 #include <windows.h>
 #include <Xinput.h>
-#include <cassert>
 #include <wrl.h>
 
 
@@ -52,7 +51,8 @@ private:
 	/// 
 	/// Keyboard
 	/// 
-	IDirectInput8* directInput_ = nullptr;
+	/*IDirectInput8*directInput_ = nullptr;*/
+
 	IDirectInputDevice8* keyboard_ = nullptr;
 	std::array<BYTE, 256> key_;
 	std::array<BYTE, 256> preKey_;
@@ -66,4 +66,5 @@ private:
 	XINPUT_STATE joyState_;
 	XINPUT_STATE preJoyState_;
 };
+
 

@@ -39,7 +39,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	{
 		Suine::BeginFlame();
 
-		ImGui::Begin("Debugcamera");
+		ImGui::Begin("Debug camera");
 		ImGui::SliderFloat3("trans", &viewProjection.translation_.x, -15, 15);
 		ImGui::SliderFloat3("rotate", &viewProjection.rotation_.x, -1, 1);
 		ImGui::End();
@@ -52,13 +52,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		ImGui::End();
 
-		ImGui::Begin("colision");
+		ImGui::Begin("collision");
 		ImGui::DragFloat3("scale", &worldTransform.scale.x, 0.1f);
 		ImGui::DragFloat3("rotate", &worldTransform.rotation.x, 0.1f);
 		ImGui::DragFloat3("trans", &worldTransform.translate.x, 0.1f);
 		ImGui::Text("uv");
-		ImGui::DragFloat3("uvscale", &uvScale.x, 0.1f);
-		ImGui::DragFloat3("uvrotate", &uvrotate.x, 0.1f);
+		ImGui::DragFloat3("upscale", &uvScale.x, 0.1f);
+		ImGui::DragFloat3("unrotated", &uvrotate.x, 0.1f);
 		ImGui::DragFloat3("uvTrans", &uvtranslate.x, 0.1f);
 		ImGui::End();
 
@@ -85,6 +85,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	}
 
+	delete input;
 	Suine::Finalize();
 
 	return 0;

@@ -10,8 +10,6 @@ WinApp *WinApp::GetInstance()
 
 void WinApp::Initialize()
 {
-
-
 	//MainWindow
 	WinApp::GetInstance()->hwnd_= CreateWIND(
 		WinApp::GetInstance()->kWindowWidth,
