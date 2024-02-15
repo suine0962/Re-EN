@@ -1,4 +1,4 @@
-#include"IndirectLightObject.hlsli"
+#include"DirectionalLightObject.hlsli"
 
 struct TransformationMatrix {
 	float32_t4x4 WVP;

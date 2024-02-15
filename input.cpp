@@ -12,14 +12,13 @@ void Input::Initialize()
 {
 	//DirectInputのインスタンス生成
 	HRESULT result;
+	WinApp* winapp = WinApp::GetInstance();
 
-	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
-	result = DirectInput8Create(WinApp::GetInstance()->GetWc().hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
+	result = DirectInput8Create(winapp->GetWc().hInstance,DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 
 	//キーボードデバイス生成
-	Microsoft::WRL::ComPtr<IDirectInputDevice8>keyboard_;
 	result = directInput->CreateDevice(GUID_SysKeyboard,&keyboard_,NULL);
 	assert(SUCCEEDED(result));
 
@@ -28,7 +27,7 @@ void Input::Initialize()
 	assert(SUCCEEDED(result));
 
 	//排他制御レベルのセット
-	result = keyboard_->SetCooperativeLevel(WinApp::GetInstance()->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = keyboard_->SetCooperativeLevel(winapp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 
 

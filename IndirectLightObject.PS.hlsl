@@ -1,5 +1,4 @@
-#include"IndirectLightObject.hlsli"
-
+#include"DirectionalLightObject.hlsli"
 
 struct Material
 {
@@ -21,19 +20,15 @@ struct PixelShaderOutput {
 	float32_t4 color : SV_TARGET0;
 };
 
+
 PixelShaderOutput main(VertexShaderOutput input) {
 
 	PixelShaderOutput output;
 	float32_t4 textureColor = gTexture.Sample(gSampler, input.texcoord);
 
-	float NdotL = dot(normalize(input.normal), -gDirectionalLight.direction);
-
-	float cos = pow(NdotL*0.5f+0.5f,2.0f);
-
-	output.color.rgb = gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
-	output.color.a = gMaterial.color.a * textureColor.a;
-
-	
+	float cos = saturate(dot(normalize(input.normal), -gDirectionalLight.direction));
+	output.color = gMaterial.color * textureColor * gDirectionalLight.color * cos * gDirectionalLight.intensity;
+	// gMaterial.color * textureColor;
 
 	return output;
 }

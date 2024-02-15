@@ -7,11 +7,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Input* input = Input::GetInstance();
 
-	input->Initialize();
+	//input->Initialize();
 
 	unique_ptr<Model> model = make_unique< Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
-
+	unique_ptr<Sprite>uvSprite = make_unique<Sprite>();
 
 	uint32_t texHandle = TextureManager::LoadTexture("Resource/uvChecker.png");
 	uint32_t BlockTexHandle = TextureManager::LoadTexture("Resource/colisionCube/tex.png");
@@ -20,11 +20,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sprite->Initialize(new SpriteBoxState, { 0,0 }, { 500,200 });
 	sprite->SetTexHandle(BlockTexHandle);
 	sprite->SetColor({ 1,1,1,1.0f });
+	uvSprite->Initialize(new SpriteBoxState, { 800,500 }, { 500,200 });
+	uvSprite->SetTexHandle(texHandle);
+	uvSprite->SetColor({ 1,1,1,1.0f });
+
 	WorldTransform SpriteWorldTransform = {};
 	SpriteWorldTransform.Initialize();
 	SpriteWorldTransform.translate = { 0,0,0 };
 	WorldTransform worldTransform = {};
 	worldTransform.Initialize();
+	WorldTransform uvTransform = {};
+	uvTransform.Initialize();
+	uvTransform.translate = { 0,0,0 };
+
 
 	ViewProjection viewProjection;
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
@@ -71,6 +79,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		worldTransform.UpdateMatrix();
 		viewProjection.UpdateMatrix();
 		SpriteWorldTransform.UpdateMatrix();
+		uvTransform.UpdateMatrix();
 		DebugTools::SetViewProjection(viewProjection);
 		DebugTools::Execute(0);
 
@@ -81,11 +90,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		model->Draw(worldTransform, viewProjection);
 		sprite->Draw(SpriteWorldTransform);
+		uvSprite->Draw(uvTransform);
+
 		Suine::EndFlame();
 
 	}
 
-	delete input;
 	Suine::Finalize();
 
 	return 0;

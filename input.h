@@ -51,9 +51,9 @@ private:
 	/// 
 	/// Keyboard
 	/// 
-	/*IDirectInput8*directInput_ = nullptr;*/
-
-	IDirectInputDevice8* keyboard_ = nullptr;
+	/// 
+	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard_ = nullptr;
 	std::array<BYTE, 256> key_;
 	std::array<BYTE, 256> preKey_;
 
