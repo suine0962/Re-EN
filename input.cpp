@@ -10,13 +10,13 @@ void Input::Initialize()
 {
 	//Directinputのインスタンス生成
 	HRESULT result;
-	ComPtr<IDirectInput8>directInput = nullptr;
+	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
 	result = DirectInput8Create(WinApp::GetInstance()->GetWc().hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 
 	//キーボードデバイス生成
-	ComPtr<IDirectInputDevice8>keyboard_;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8>keyboard_;
 	result = directInput->CreateDevice(GUID_SysKeyboard,&keyboard_,NULL);
 	assert(SUCCEEDED(result));
 

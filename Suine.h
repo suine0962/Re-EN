@@ -26,6 +26,7 @@ public:
 	static void EndFlame();
 private:
 
-	D3DResourceLeakChecker leakCheck;
+	D3DResourceLeakChecker leakCheck; 
+	//Input* input = nullptr;
 };
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #define DIRECTINPUT_VERSION		0x0800  // DirectInputのバージョン指定
 #include <dinput.h>
@@ -9,6 +9,9 @@
 #include <array>
 #include <windows.h>
 #include <Xinput.h>
+#include <cassert>
+#include <wrl.h>
+
 
 class Input
 {

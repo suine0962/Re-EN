@@ -2,8 +2,12 @@
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+
 	Suine::Initialize();
-	Input::GetInstance();
+
+	Input* input = Input::GetInstance();
+
+	input->Initialize();
 
 	unique_ptr<Model> model = make_unique< Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
@@ -70,9 +74,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		DebugTools::SetViewProjection(viewProjection);
 		DebugTools::Execute(0);
 
-		if (Input::GetInstance()->PressKey(DIK_D))
+		if (input->PressKey(DIK_UP))
 		{
-			worldTransform.translate.x += 2.0f;
+			worldTransform.rotation.x += 2.0f;
 		}
 
 		model->Draw(worldTransform, viewProjection);
