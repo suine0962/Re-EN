@@ -12,7 +12,7 @@ void Suine::Initialize()
 {
 	Suine::GetInstance();
 
-	WinApp::Initialize();
+	WinApp::GetInstance()->Initialize(L"SUINE");
 	DirectXCommon::initialize();
 	ShaderManager::Initialize();
 	GraphicsPipelineManager::Initialize();
@@ -26,7 +26,7 @@ void Suine::Finalize()
 	TextureManager::Finalize();
 	ImGuiManager::Finalize();
 	DirectXCommon::Finalize();
-	WinApp::Finalize();
+	WinApp::GetInstance()->Finalize();
 }
 
 void Suine::BeginFlame()

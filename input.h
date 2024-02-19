@@ -1,70 +1,44 @@
-#pragma once
-
-#define DIRECTINPUT_VERSION		0x0800  // DirectInputのバージョン指定
+﻿#pragma once
+#define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
 #include <dinput.h>
+#include <cassert>
+#include <wrl.h>
+//#include <Xinput.h>
+
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
-
-
-#include <array>
-#include <windows.h>
-#include <Xinput.h>
-#include <wrl.h>
-
 
 class Input
 {
 public:
-	/// 
-	/// Default Method
-	/// 
 	static Input* GetInstance();
+	Input() = default;
+	~Input() = default;
 
-	// 初期化
+	const Input& operator=(const Input&) = delete;
+
 	void Initialize();
-
-	// 更新処理
 	void Update();
+	void Draw();
+	void Release();
 
-	///
-	/// Keyboard Method
-	/// 
-	// キーを押した瞬間
-	bool TriggerKey(BYTE keyNumber) const;
+	/// <summary>
+	/// キーの押下をチェック
+	/// </summary>
+	/// <param name="keyNumber"></param>
+	/// <returns></returns>
+	bool PushKey(BYTE keyNumber);
 
-	// キーを押している間
-	bool PressKey(BYTE keyNumber)const;
+	bool TriggerKey(BYTE keyNumber);
 
-	// キーを離した瞬間
-	bool ReleaseKey(BYTE keyNumber)const;
-
-	///
-	/// GamePad Method
-	/// 
-	// ゲームパッドの状態を取得
-	bool GetJoystickState(int32_t stickNo, XINPUT_STATE& state);
-
-	// デッドゾーンを適用する関数
-	SHORT ApplyDeadzone(SHORT inputValue);
-
+	// namespace省略
+	template <class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
 private:
-	/// 
-	/// Keyboard
-	/// 
-	/// 
-	Microsoft::WRL::ComPtr<IDirectInput8>directInput = nullptr;
-	Microsoft::WRL::ComPtr<IDirectInputDevice8> keyboard_ = nullptr;
-	std::array<BYTE, 256> key_;
-	std::array<BYTE, 256> preKey_;
+	HRESULT result;
+	// キーボードデバイスの生成
+	ComPtr <IDirectInputDevice8> keyboard = nullptr;
+	BYTE keys[256];
+	BYTE preKeys[256];
 
-	///
-	/// GamePad
-	/// 
-	// デッドゾーンの閾値
-	const int DEADZONE_THRESHOLD = 8000;
-
-	XINPUT_STATE joyState_;
-	XINPUT_STATE preJoyState_;
 };
-
 

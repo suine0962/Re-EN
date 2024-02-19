@@ -342,18 +342,12 @@
     <None Include="DirectXTex\SECURITY.md">
       <Filter>DirectXTex</Filter>
     </None>
-    <None Include="IndirectLightObject.hlsli" />
     <None Include="SpriteObject3d.hlsli" />
-    <None Include="Particle.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ShapeObject3d.PS.hlsl" />
     <FxCompile Include="ShapeObject3d.VS.hlsl" />
-    <FxCompile Include="IndirectLightObject.PS.hlsl" />
-    <FxCompile Include="IndirectLightObject.VS.hlsl" />
     <FxCompile Include="SpriteObject3d.PS.hlsl" />
     <FxCompile Include="SpriteObject3d.VS.hlsl" />
-    <FxCompile Include="Particle.PS.hlsl" />
-    <FxCompile Include="Particle.VS.hlsl" />
   </ItemGroup>
 </Project>

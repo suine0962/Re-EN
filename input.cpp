@@ -1,92 +1,81 @@
-#include "input.h"
-#include <cassert>
+#include "Input.h"
 #include "WinApp.h"
+#include <Xinput.h>
+//Xinput.lib; Xinput9_1_0.lib
+#pragma comment(lib, "Xinput.lib")
 
-Input* Input::GetInstance() {
-	static Input instance;
-
-	return &instance;
-}
-
-void Input::Initialize()
-{
-	//DirectInputのインスタンス生成
-	HRESULT result;
-	WinApp* winapp = WinApp::GetInstance();
-
-	result = DirectInput8Create(winapp->GetWc().hInstance,DIRECTINPUT_VERSION, IID_IDirectInput8,
+void Input::Initialize() {
+	WinApp* WinApp = WinApp::GetInstance();
+	// DirectInputの初期化
+	ComPtr<IDirectInput8> directInput = nullptr;
+	result = DirectInput8Create(
+		WinApp->GetWc().hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 
-	//キーボードデバイス生成
-	result = directInput->CreateDevice(GUID_SysKeyboard,&keyboard_,NULL);
+	// キーボードデバイスの生成
+	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
 	assert(SUCCEEDED(result));
 
-	//入力データ形式のセット
-	result = keyboard_->SetDataFormat(&c_dfDIKeyboard);
+	// 入力データ形式のセット
+	result = keyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
 	assert(SUCCEEDED(result));
 
-	//排他制御レベルのセット
-	result = keyboard_->SetCooperativeLevel(winapp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	// 排他制御レベルのセット
+	result = keyboard->SetCooperativeLevel(
+		WinApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
+
+	DWORD dwResult;
+	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	{
+		XINPUT_STATE state;
+		ZeroMemory(&state, sizeof(XINPUT_STATE));
+
+		// Simply get the state of the controller from XInput.
+		dwResult = XInputGetState(i, &state);
+
+		if (dwResult == ERROR_SUCCESS)
+		{
+			// Controller is connected
+		}
+		else
+		{
+			// Controller is not connected
+		}
+	}
 
 
 }
 
-void Input::Update()
+void Input::Update() {
+	// 前回のキー入力を保存
+	memcpy(preKeys, keys, sizeof(keys));
+
+	// キーボード情報の取得開始
+	keyboard->Acquire();
+
+	keyboard->GetDeviceState(sizeof(keys), keys);
+}
+
+bool Input::PushKey(BYTE keyNumber)
 {
-	preKey_ = key_;
-
-	//キーボード情報の取得
-	keyboard_->Acquire();
-
-	//全キーの入力状態を取得する
-	BYTE key[256] = {};
-	keyboard_->GetDeviceState(sizeof(key), key);
-
-}
-
-bool Input::TriggerKey(BYTE keyNumber) const {
-	if (!preKey_[keyNumber] && key_[keyNumber]) {
+	if (keys[keyNumber]) {
 		return true;
 	}
-	else {
-		return false;
-	}
+	return false;
 }
 
-bool Input::PressKey(BYTE keyNumber)const {
-	if (key_[keyNumber]) {
+bool Input::TriggerKey(BYTE keyNumber)
+{
+	if (keys[keyNumber] && preKeys[keyNumber] == 0) {
 		return true;
 	}
-	else {
-		return false;
-	}
+	return false;
 }
-
-bool Input::ReleaseKey(BYTE keyNumber)const {
-	if (preKey_[keyNumber] && !key_[keyNumber]) {
-		return true;
-	}
-	else {
-		return false;
-	}
+Input* Input::GetInstance() {
+	static Input instance;
+	return &instance;
 }
-
-//bool Input::GetJoystickState(int32_t stickNo, XINPUT_STATE& state) {
-//	//DWORD result = XInputGetState(stickNo, &state);
-//	//result == ERROR_SUCCESS;
-//	return 0;
-//}
-
-// デッドゾーンを適用する関数
-//SHORT Input::ApplyDeadzone(SHORT inputValue) {
-//	if (abs(inputValue) < DEADZONE_THRESHOLD) {
-//		return 0; // デッドゾーン内の入力は無視
-//	}
-//	// デッドゾーン外の入力はそのまま返す
-//	return inputValue;
-//}
-
 
 

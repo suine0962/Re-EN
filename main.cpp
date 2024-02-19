@@ -1,4 +1,4 @@
-#include"Suine.h"
+﻿#include"Suine.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -7,7 +7,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Input* input = Input::GetInstance();
 
-	//input->Initialize();
+	input->Initialize();
 
 	unique_ptr<Model> model = make_unique< Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
@@ -43,9 +43,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Vector3 uvrotate = {};
 	Vector3 uvtranslate = {};
 
-	while (WinApp::WinMsg())
+	while (true)
 	{
+		if (WinApp::GetInstance()->ProcessMessage()) {
+			// ゲームループを抜ける
+			break;
+		}
 		Suine::BeginFlame();
+
+		input->Update();
 
 		ImGui::Begin("Debug camera");
 		ImGui::SliderFloat3("trans", &viewProjection.translation_.x, -15, 15);
@@ -70,6 +76,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ImGui::DragFloat3("uvTrans", &uvtranslate.x, 0.1f);
 		ImGui::End();
 
+
+		
+
 		
 
 		model->SetUvRotate(uvrotate);
@@ -83,9 +92,36 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		DebugTools::SetViewProjection(viewProjection);
 		DebugTools::Execute(0);
 
-		if (input->PressKey(DIK_UP))
+		//真ん中のモデルおを動かす処理
+		if (input->PushKey(DIK_W))
 		{
-			worldTransform.rotation.x += 2.0f;
+			worldTransform.translate.y += 0.2f;
+		}
+
+		if (input->PushKey(DIK_S))
+		{
+			worldTransform.translate.y -= 0.2f;
+		}
+
+		if (input->PushKey(DIK_A))
+		{
+			worldTransform.translate.x -= 0.2f;
+		}
+
+		if (input->PushKey(DIK_D))
+		{
+			worldTransform.translate.x += 0.2f;
+		}
+
+		//右下uvCheckerSpriteを動かす処理
+		if (input->PushKey(DIK_RIGHT))
+		{
+			uvTransform.translate.x += 0.2f;
+		}
+
+		if (input->PushKey(DIK_LEFT))
+		{
+			uvTransform.translate.x -= 0.2f;
 		}
 
 		model->Draw(worldTransform, viewProjection);
