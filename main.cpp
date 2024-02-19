@@ -53,7 +53,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		input->Update();
 
-		ImGui::Begin("Debug camera");
+		/*ImGui::Begin("Debug camera");
 		ImGui::SliderFloat3("trans", &viewProjection.translation_.x, -15, 15);
 		ImGui::SliderFloat3("rotate", &viewProjection.rotation_.x, -1, 1);
 		ImGui::End();
@@ -74,7 +74,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ImGui::DragFloat3("upscale", &uvScale.x, 0.1f);
 		ImGui::DragFloat3("unrotated", &uvrotate.x, 0.1f);
 		ImGui::DragFloat3("uvTrans", &uvtranslate.x, 0.1f);
-		ImGui::End();
+		ImGui::End();*/
 
 
 		
@@ -116,12 +116,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//右下uvCheckerSpriteを動かす処理
 		if (input->PushKey(DIK_RIGHT))
 		{
-			uvTransform.translate.x += 0.2f;
+			uvTransform.translate.x += 0.5f;
 		}
 
 		if (input->PushKey(DIK_LEFT))
 		{
-			uvTransform.translate.x -= 0.2f;
+			uvTransform.translate.x -= 0.5f;
 		}
 
 		model->Draw(worldTransform, viewProjection);

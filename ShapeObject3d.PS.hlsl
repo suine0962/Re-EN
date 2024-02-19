@@ -1,4 +1,3 @@
-
 struct Material
 {
 	float32_t4 color;
@@ -16,11 +15,5 @@ struct PixelShaderOutput {
 PixelShaderOutput main() {
 	PixelShaderOutput output;
 	output.color = gMaterial.color;
-
-	if (output.color.a == 0.0)
-	{
-		discard;
-	}
-
 	return output;
 }
