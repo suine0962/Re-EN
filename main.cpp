@@ -105,8 +105,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		SpriteWorldTransform.UpdateMatrix();
 		ParticleTransform.UpdateMatrix();
 		uvTransform.UpdateMatrix();
-		/*DebugTools::SetViewProjection(viewProjection);
-		DebugTools::Execute(0);*/
+
+		//DebugTools::SetViewProjection(viewProjection);
+		//DebugTools::Execute(0);
 
 		//真ん中のモデルおを動かす処理
 		if (input->PushKey(DIK_W))
