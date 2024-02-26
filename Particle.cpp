@@ -183,7 +183,7 @@ void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 	//TransformationCBufferの場所を設定
 	directX->GetCommands().m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である
-	directX->GetCommands().m_pList->SetGraphicsRootDescriptorTable(2,textureManager_->texCommand(texture));
+	textureManager_->texCommand(texture);
 	//directX->GetCommands().m_pList->SetGraphicsRootConstantBufferView(3,)
 	directX->GetCommands().m_pList->DrawIndexedInstanced(6, kNumMaxInstance, 0, 0, 0);
 	// 
