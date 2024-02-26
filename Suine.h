@@ -10,6 +10,7 @@
 #include"TextureManager.h"
 #include"Sprite.h"
 #include"input.h"
+#include "Particle.h"
 
 class Suine
 {

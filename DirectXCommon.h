@@ -56,6 +56,7 @@ public:
 	ComPtr<ID3D12DescriptorHeap>GetSrvHeap() { return DirectXCommon::GetInstance()->m_pSrvDescriptorHeap;}
 	SwapChain GetswapChain() { return DirectXCommon::GetInstance()->swapChain; }
 	RTV GetRtv() { return DirectXCommon::GetInstance()->rtv; }
+
 #pragma endregion
 	
 

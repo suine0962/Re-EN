@@ -2,6 +2,7 @@
 
 void ViewProjection::Initialize(Vector3 r, Vector3 t)
 {
+
 	rotation_= r;
 	translation_ = t;
 }

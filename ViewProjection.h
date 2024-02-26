@@ -12,7 +12,7 @@ struct ViewProjection {
 	void UpdateMatrix();
 
 
-
+	Vector3 scale_ = { 0.0f,0.0f,0.0f };
 	Vector3 rotation_ = { 0.0f,0.0f,0.0f };
 	Vector3 translation_ = { 0.0f,0.0f,-15.0f };
 	Matrix4x4 matView_{};

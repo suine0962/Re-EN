@@ -2,12 +2,18 @@
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+	Vector4 color;
 
 	Suine::Initialize();
 
 	Input* input = Input::GetInstance();
 
+	Particle* particle = new Particle();
+
 	input->Initialize();
+
+	particle->Initialize(color);
+
 
 	unique_ptr<Model> model = make_unique< Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
@@ -127,6 +133,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		model->Draw(worldTransform, viewProjection);
 		sprite->Draw(SpriteWorldTransform);
 		uvSprite->Draw(uvTransform);
+		particle->Draw(texHandle, color, viewProjection);
 
 		Suine::EndFlame();
 

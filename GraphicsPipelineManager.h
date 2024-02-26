@@ -18,6 +18,7 @@ struct PSO
 	PSOProperty shape;
 	PSOProperty Line;
 	PSOProperty Sprite;
+	PSOProperty particle;
 };
 
 class GraphicsPipelineManager
@@ -35,7 +36,7 @@ private:
 	static  PSOProperty CreateShapePSO(ComPtr<ID3D12Device>device,Commands command,SShaderMode shader);
 	static PSOProperty CreateLinePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 	static PSOProperty CreateSpritePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
-
+	static PSOProperty CreateParticlePSO(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 
 	PSO pso = {};
 

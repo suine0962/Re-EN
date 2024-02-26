@@ -13,6 +13,7 @@ void ShaderManager::Initialize()
 	ShaderComples();
 }
 
+
 IDxcBlob* ShaderManager::CompilerShaderFanc(const std::wstring& filePath, const wchar_t* profile)
 {
 	ComPtr<IDxcUtils> dxcUtils = ShaderManager::Getinstance()->dxc.m_pUtils.Get();
@@ -114,6 +115,17 @@ void ShaderManager::ShapeShader()
 		ShaderManager::CompilerShaderFanc(
 			L"SpriteObject3d.PS.hlsl",
 			L"ps_6_0");
+
+	shaders.particle.vertexBlob =
+		ShaderManager::CompilerShaderFanc(
+			L"Particle.VS.hlsl",
+			L"vs_6_0");
+
+	shaders.particle.pixelBlob =
+		ShaderManager::CompilerShaderFanc(
+			L"Particle.PS.hlsl",
+			L"ps_6_0");
+
 
 
 	ShaderManager::Getinstance()->shaders_ = shaders;

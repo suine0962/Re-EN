@@ -1,33 +1,26 @@
 #include "Particle.h"
 
 
-Particle::Particle() {};
+Particle::Particle() {}
 
-void Particle::Initilize(Vector4 color)
+void Particle::Initialize(const Vector4& color)
 {
+	
+
 	// Sprite用の頂点リソースを作る
-	vertexResourceSprite_= CreateResources::CreateBufferResource(sizeof(VertexData) * 4);
+	vertexResourceSprite_ = CreateResources::CreateBufferResource(sizeof(VertexData) * 4);
+	
+	//頂点バッファビューを作る
+	vertexBufferViewSprite_.BufferLocation= vertexResourceSprite_->GetGPUVirtualAddress();
 
-
-
-}
-
-void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
-{
-	const uint32_t kNunInstance = 10;//インスタンす数
 
 	//instancing用のTransformationMatrixリソースを作る
-	Microsoft::WRL::ComPtr<ID3D12Resource>instancingResource =
+	instancingResorce =
 		CreateResources::CreateBufferResource(sizeof(TransformationMatrix) * kNunInstance);
 	//書き込むためのアドレスを取得
 	TransformationMatrix* instancingData = nullptr;
-	instancingResource->Map(0, nullptr, reinterpret_cast<void**>(&instancingData));
+	instancingResorce->Map(0, nullptr, reinterpret_cast<void**>(&instancingData));
 
-	//単位行列を書き込んでおく
-	for (uint32_t index = 0; index < kNunInstance; ++index) {
-		instancingData[index].WVP = MatrixTransform::Identity();
-		instancingData[index].world =MatrixTransform::Identity();
-	}
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
 
@@ -39,7 +32,31 @@ void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 	instancingSrvDesc.Buffer.NumElements = kNunInstance;
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
 
-	//D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU = DirectXCommon::GetInstance()->GetSrvHeap();
+	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU = DirectXCommon::GetInstance()->GetSrvHeap()->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE instancingSrvHandleGPU = DirectXCommon::GetInstance()->GetSrvHeap()->GetGPUDescriptorHandleForHeapStart();
+
+
+
+
+	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(instancingResorce.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
+
+	
+
+}
+
+
+void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
+{
+	
+	//頂点バッファビュー　
+	// Deraに必要な関数
+	//資料18ページ
+	// 
+	//単位行列を書き込んでおく
+	for (uint32_t index = 0; index < kNunInstance; ++index) {
+		instancingData[index].WVP = MatrixTransform::Identity();
+		instancingData[index].World = MatrixTransform::Identity();
+	}
 
 }
 
