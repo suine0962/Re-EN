@@ -15,10 +15,12 @@
 #include"Vector3.h"
 #include"Vector2.h"
 #include "Matrix4x4.h"
+#include "MatrixTransform.h"
 
 #include "CreateResource.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
+#include "TextureManager.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -72,11 +74,12 @@ private:
 	const static uint32_t kNumMaxInstance = 10; // インスタンス数
 	// Instancing用のTransformMatrixリソースを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource> instancingResorce = nullptr;
-	PSO* pso_ = nullptr;
+	GraphicsPipelineManager* pso_ = nullptr;
 	Microsoft::WRL::ComPtr < ID3D12Resource> vertexResourceSprite_ = nullptr;
-	WinApp* sWinAPI;
-	DirectXCommon* sDirectXCommon;
-
+	WinApp* Winapp;
+	DirectXCommon* directX;
+	WorldTransform cameraTransform;
+	ViewProjection viewPro;
 	TextureManager* textureManager_ = nullptr;
 	// 頂点バッファビューを作成する
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
