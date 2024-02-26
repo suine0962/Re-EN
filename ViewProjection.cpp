@@ -1,8 +1,8 @@
 ﻿#include "ViewProjection.h"
 
-void ViewProjection::Initialize(Vector3 r, Vector3 t)
+void ViewProjection::Initialize(Vector3 s, Vector3 r, Vector3 t)
 {
-
+	scale_ = s;
 	rotation_= r;
 	translation_ = t;
 }

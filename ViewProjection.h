@@ -7,7 +7,7 @@ struct ViewProjection {
 	
 
 
-	void Initialize(Vector3 r={0.0f,0.0f,0.0f},Vector3 t={0.0f,0.0f,-5.0f});
+	void Initialize(Vector3 s = {0.0f,0.0f,0.0f}, Vector3 r = { 0.0f,0.0f,0.0f }, Vector3 t = { 0.0f,0.0f,-5.0f });
 
 	void UpdateMatrix();
 

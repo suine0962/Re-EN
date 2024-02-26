@@ -6,6 +6,7 @@ Particle::Particle() {}
 void Particle::Initialize(const Vector4& color)
 {
 	directX = DirectXCommon::GetInstance();
+	
 	textureManager_ = TextureManager::GetInstance();
 	// Sprite用の頂点リソースを作る
 	vertexResourceSprite_ = CreateResources::CreateBufferResource(sizeof(VertexData) * 4);
@@ -137,6 +138,7 @@ void Particle::Initialize(const Vector4& color)
 void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 {
 	pso_ = GraphicsPipelineManager::GetInstance();
+	Commands commands = DirectXCommon::GetInstance()->GetCommands();
 	materialData->color = color;
 
 	WorldTransform Transfroms[kNumMaxInstance];
@@ -148,13 +150,18 @@ void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 		Transfroms[index].translate = { index * 0.1f,index * 0.1f,index * 0.1f };
 	}
 
+
+
 	for (uint32_t index = 0; index < kNumMaxInstance; ++index)
 	{
+
+		//materialData->uvTransform = MatrixTransform::AffineMatrix()
+
 		Matrix4x4 WorldMatrix =
 			MatrixTransform::AffineMatrix((Transfroms[index].scale), (Transfroms[index].rotation), (Transfroms[index].rotation));
 
 		Matrix4x4 viewMatrix =
-			MatrixTransform::AffineMatrix(view.scale_, view.rotation_, view.translation_);
+			MatrixTransform::AffineMatrix(cameraTransform.scale,cameraTransform.rotation,cameraTransform.translate);
 
 		Matrix4x4 cameraMatrix =
 			MatrixTransform::Inverse(viewMatrix);
@@ -172,20 +179,20 @@ void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 	}
 
 
-	directX->GetCommands().m_pList->SetGraphicsRootSignature(pso_->GetInstance()->GetPso().particle.rootSignature.Get());
-	directX->GetCommands().m_pList->SetPipelineState(pso_->GetInstance()->GetPso().particle.GraphicsPipelineState.Get());//psoを設定
-	directX->GetCommands().m_pList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
-	directX->GetCommands().m_pList->IASetIndexBuffer(&indexBufferViewSprite);
+	commands.m_pList->SetGraphicsRootSignature(pso_->GetInstance()->GetPso().particle.rootSignature.Get());
+	commands.m_pList->SetPipelineState(pso_->GetInstance()->GetPso().particle.GraphicsPipelineState.Get());//psoを設定
+	commands.m_pList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
+	commands.m_pList->IASetIndexBuffer(&indexBufferViewSprite);
 	//形状を設定 psoに関しては設定しているものとは別.同じものを設定すると考えておけばいい
-	directX->GetCommands().m_pList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	commands.m_pList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//マテリアルCBufferの場所を設定
-	directX->GetCommands().m_pList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	commands.m_pList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//TransformationCBufferの場所を設定
-	directX->GetCommands().m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
+	commands.m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である
 	textureManager_->texCommand(texture);
 	//directX->GetCommands().m_pList->SetGraphicsRootConstantBufferView(3,)
-	directX->GetCommands().m_pList->DrawIndexedInstanced(6, kNumMaxInstance, 0, 0, 0);
+	commands.m_pList->DrawIndexedInstanced(6, kNumMaxInstance, 0, 0, 0);
 	// 
 	// Deraに必要な関数
 	//資料18ページ

@@ -23,8 +23,7 @@ void WorldTransform::TransfarMatrix(ComPtr<ID3D12Resource>& wvpResource, ViewPro
 	{
 		Matrix4x4 viewMatrix = MatrixTransform::Identity();
 		Matrix4x4 OrthographicMatrix = MatrixTransform::OrthographicMatrix(
-			0, 0, float(WinApp::GetkCilientWidth()), float(WinApp::GetkCilientHeight()), 0.0f, 100.0f
-		);
+			0, 0, float(WinApp::GetkCilientWidth()), float(WinApp::GetkCilientHeight()), 0.0f, 100.0f);
 
 		matWorld =MatrixTransform::Multiply(matWorld,MatrixTransform::Multiply(viewMatrix,OrthographicMatrix));
 	}
