@@ -17,6 +17,7 @@ void Particle::Initialize(const Vector4& color)
 
 	// 使用するリソースのサイズは頂点6つ分のサイズ
 	vertexBufferViewSprite_.SizeInBytes = sizeof(VertexData) * 4;
+
 	// 1頂点あたりのサイズ
 	vertexBufferViewSprite_.StrideInBytes = sizeof(VertexData);
 
@@ -90,15 +91,6 @@ void Particle::Initialize(const Vector4& color)
 
 
 
-
-	instancingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
-	instancingSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	instancingSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
-	instancingSrvDesc.Buffer.FirstElement = 0;
-	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
-	instancingSrvDesc.Buffer.NumElements = kNumMaxInstance;
-	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
-
 	instancingSrvHandleCPU = directX->GetSrvHeap()->GetCPUDescriptorHandleForHeapStart();
 	instancingSrvHandleGPU = directX->GetSrvHeap()->GetGPUDescriptorHandleForHeapStart();
 
@@ -106,8 +98,8 @@ void Particle::Initialize(const Vector4& color)
 	//instancingSrvHandleCPU = sDirectXCommon->GetSrvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
 	//instancingSrvHandleGPU = sDirectXCommon->GetSrvDescriptorHeap()->GetGPUDescriptorHandleForHeapStart();
 	//// 先頭はImGuiが使っているのでその次を使う
-	//instancingSrvHandleCPU.ptr += sDirectXCommon->GetDevice()->(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * TextureManager::index_;
-	//instancingSrvHandleGPU.ptr += sDirectXCommon->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * TextureManager::index_;
+	instancingSrvHandleCPU.ptr += directX->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * 10;
+	instancingSrvHandleGPU.ptr += directX->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * 10;
 	// 
 
 	//instancingSrvHandleCPU = directX->GetSrvHeap().Get().(sDirectXCommon->GetSrvDescriptorHeap().Get(), sDirectXCommon->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), TextureManager::index_);
@@ -131,7 +123,7 @@ void Particle::Initialize(const Vector4& color)
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
 
 	
-	//directX->GetDevice()->CreateShaderResourceView(instancingResorce.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
+	directX->GetDevice()->CreateShaderResourceView(instancingResorce.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
 
 }
 
@@ -189,11 +181,11 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	//マテリアルCBufferの場所を設定
 	commands.m_pList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//TransformationCBufferの場所を設定
-	commands.m_pList->SetGraphicsRootDescriptorTable(2, instancingSrvHandleGPU);
+	commands.m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である
 	textureManager_->texCommand(texture);
 	//directX->GetCommands().m_pList->SetGraphicsRootConstantBufferView(3,)
-	commands.m_pList->DrawInstanced(6, kNumMaxInstance, 0, 0);
+	commands.m_pList->DrawIndexedInstanced(6, kNumMaxInstance, 0, 0,0);
 	// 
 	// Deraに必要な関数
 	//資料18ページ

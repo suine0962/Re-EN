@@ -86,7 +86,7 @@ private:
 	Microsoft::WRL::ComPtr < ID3D12Resource> vertexResourceSprite_ = nullptr;
 	WinApp* Winapp;
 	DirectXCommon* directX;
-	WorldTransform cameraTransform;
+	//WorldTransform cameraTransform;
 	ViewProjection viewPro;
 	TextureManager* textureManager_ = nullptr;
 	// 頂点バッファビューを作成する

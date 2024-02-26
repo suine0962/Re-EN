@@ -4,6 +4,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	Vector4 color;
 
+	color = { 1,1,1 };
+
 	Suine::Initialize();
 
 	Input* input = Input::GetInstance();
