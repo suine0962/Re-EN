@@ -341,6 +341,7 @@
     </None>
     <None Include="SpriteObject3d.hlsli" />
     <None Include="Particle.hlsli" />
+    <None Include="DirectionalLight.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ShapeObject3d.PS.hlsl" />
@@ -349,5 +350,7 @@
     <FxCompile Include="SpriteObject3d.VS.hlsl" />
     <FxCompile Include="Particle.PS.hlsl" />
     <FxCompile Include="Particle.VS.hlsl" />
+    <FxCompile Include="DirectionalLight.VS.hlsl" />
+    <FxCompile Include="DirectionalLight.PS.hlsl" />
   </ItemGroup>
 </Project>

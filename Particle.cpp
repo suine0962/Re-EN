@@ -151,7 +151,7 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 		//materialData->uvTransform = MatrixTransform::AffineMatrix()
 
 		Matrix4x4 WorldMatrix =
-			MatrixTransform::AffineMatrix((Transfroms[index].scale), (Transfroms[index].rotation), (Transfroms[index].rotation));
+			MatrixTransform::AffineMatrix((Transfroms[index].scale), (Transfroms[index].rotation), (Transfroms[index].translate));
 
 		Matrix4x4 viewMatrix =
 			MatrixTransform::AffineMatrix(camera.scale,camera.rotation,camera.translate);
