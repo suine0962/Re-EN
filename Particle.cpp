@@ -193,7 +193,7 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である
 	textureManager_->texCommand(texture);
 	//directX->GetCommands().m_pList->SetGraphicsRootConstantBufferView(3,)
-	commands.m_pList->DrawInstanced(3, kNumMaxInstance, 0, 0);
+	commands.m_pList->DrawInstanced(6, kNumMaxInstance, 0, 0);
 	// 
 	// Deraに必要な関数
 	//資料18ページ

@@ -14,6 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	particle->Initialize(color);
 
+	
 
 	unique_ptr<Model> model = make_unique< Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
@@ -38,7 +39,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	WorldTransform uvTransform = {};
 	uvTransform.Initialize();
 	uvTransform.translate = { 0,0,0 };
-
+	WorldTransform ParticleTransform = {};
+	ParticleTransform.Initialize();
+	ParticleTransform.translate = { 300.0f,200.0f };
 
 	ViewProjection viewProjection;
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
@@ -94,6 +97,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		worldTransform.UpdateMatrix();
 		viewProjection.UpdateMatrix();
 		SpriteWorldTransform.UpdateMatrix();
+		ParticleTransform.UpdateMatrix();
 		uvTransform.UpdateMatrix();
 		DebugTools::SetViewProjection(viewProjection);
 		DebugTools::Execute(0);
@@ -133,7 +137,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		model->Draw(worldTransform, viewProjection);
 		sprite->Draw(SpriteWorldTransform);
 		uvSprite->Draw(uvTransform);
-		particle->Draw(texHandle, color, worldTransform);
+		particle->Draw(texHandle, color, ParticleTransform);
 
 		Suine::EndFlame();
 
