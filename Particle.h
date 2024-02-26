@@ -67,7 +67,7 @@ public:
 
 	void Initialize(const Vector4& color);
 	//void Update();
-	void Draw(uint32_t texture, const Vector4& color, ViewProjection view);
+	void Draw(uint32_t texture, const Vector4& color, WorldTransform camera);
 	void Release();
 	void SetTextureManager(TextureManager* textureManager) {
 		textureManager_ = textureManager;
@@ -102,7 +102,6 @@ private:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU;
 	D3D12_GPU_DESCRIPTOR_HANDLE instancingSrvHandleGPU;
-
 
 
 	//D3D12_DESCRIPTOR_RANGE descriptorRange_[1] = {};

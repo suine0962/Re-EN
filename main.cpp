@@ -133,7 +133,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		model->Draw(worldTransform, viewProjection);
 		sprite->Draw(SpriteWorldTransform);
 		uvSprite->Draw(uvTransform);
-		particle->Draw(texHandle, color, viewProjection);
+		particle->Draw(texHandle, color, worldTransform);
 
 		Suine::EndFlame();
 

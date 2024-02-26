@@ -619,7 +619,7 @@ PSOProperty GraphicsPipelineManager::CreateParticlePSO(ComPtr<ID3D12Device> devi
 		IID_PPV_ARGS(&ParticlePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
-	return PSOProperty();
+	return ParticlePSO;
 }
 
 

@@ -8,6 +8,7 @@ void Particle::Initialize(const Vector4& color)
 	directX = DirectXCommon::GetInstance();
 	
 	textureManager_ = TextureManager::GetInstance();
+
 	// Sprite用の頂点リソースを作る
 	vertexResourceSprite_ = CreateResources::CreateBufferResource(sizeof(VertexData) * 4);
 	
@@ -98,8 +99,8 @@ void Particle::Initialize(const Vector4& color)
 	instancingSrvDesc.Buffer.NumElements = kNumMaxInstance;
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
 
-	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU = directX->GetSrvHeap()->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE instancingSrvHandleGPU = directX->GetSrvHeap()->GetGPUDescriptorHandleForHeapStart();
+	instancingSrvHandleCPU = directX->GetSrvHeap()->GetCPUDescriptorHandleForHeapStart();
+	instancingSrvHandleGPU = directX->GetSrvHeap()->GetGPUDescriptorHandleForHeapStart();
 
 	//// SRVを作成するDescriptorHeapの場所を決める
 	//instancingSrvHandleCPU = sDirectXCommon->GetSrvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart();
@@ -130,12 +131,12 @@ void Particle::Initialize(const Vector4& color)
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
 
 	
-	directX->GetDevice()->CreateShaderResourceView(instancingResorce.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
+	//directX->GetDevice()->CreateShaderResourceView(instancingResorce.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
 
 }
 
 
-void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
+void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camera)
 {
 	pso_ = GraphicsPipelineManager::GetInstance();
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
@@ -161,7 +162,7 @@ void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 			MatrixTransform::AffineMatrix((Transfroms[index].scale), (Transfroms[index].rotation), (Transfroms[index].rotation));
 
 		Matrix4x4 viewMatrix =
-			MatrixTransform::AffineMatrix(cameraTransform.scale,cameraTransform.rotation,cameraTransform.translate);
+			MatrixTransform::AffineMatrix(camera.scale,camera.rotation,camera.translate);
 
 		Matrix4x4 cameraMatrix =
 			MatrixTransform::Inverse(viewMatrix);
@@ -188,11 +189,11 @@ void Particle::Draw(uint32_t texture, const Vector4& color, ViewProjection view)
 	//マテリアルCBufferの場所を設定
 	commands.m_pList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//TransformationCBufferの場所を設定
-	commands.m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
+	commands.m_pList->SetGraphicsRootDescriptorTable(2, instancingSrvHandleGPU);
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である
 	textureManager_->texCommand(texture);
 	//directX->GetCommands().m_pList->SetGraphicsRootConstantBufferView(3,)
-	commands.m_pList->DrawIndexedInstanced(6, kNumMaxInstance, 0, 0, 0);
+	commands.m_pList->DrawInstanced(3, kNumMaxInstance, 0, 0);
 	// 
 	// Deraに必要な関数
 	//資料18ページ
