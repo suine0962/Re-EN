@@ -136,12 +136,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			uvTransform.translate.x -= 0.5f;
 		}
 
-		particle->Draw(texHandle, color, ParticleTransform);
+		
 
 		model->Draw(worldTransform, viewProjection);
 		sprite->Draw(SpriteWorldTransform);
 		uvSprite->Draw(uvTransform);
-		
+		particle->Draw(texHandle, color, ParticleTransform);
 
 		Suine::EndFlame();
 

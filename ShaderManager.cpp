@@ -126,7 +126,15 @@ void ShaderManager::ShapeShader()
 			L"Particle.PS.hlsl",
 			L"ps_6_0");
 
+	shaders.Light.vertexBlob =
+		ShaderManager::CompilerShaderFanc(
+			L"DirectionalLight.VS.hlsl",
+			L"vs_6_0");
 
+	shaders.Light.pixelBlob =
+		ShaderManager::CompilerShaderFanc(
+			L"DirectionalLight.PS.hlsl",
+			L"ps_6_0_");
 
 	ShaderManager::Getinstance()->shaders_ = shaders;
 }

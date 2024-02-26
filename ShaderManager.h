@@ -18,6 +18,7 @@ struct SShaders
 	SShaderMode shape;
 	SShaderMode sprite;
 	SShaderMode particle;
+	SShaderMode Light;
 
 };
 
