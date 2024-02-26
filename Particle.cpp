@@ -38,7 +38,9 @@ void Particle::Initialize(const Vector4& color)
 	// 実際に頂点リソースを作る
 	materialResource =CreateResources::CreateBufferResource(sizeof(Material));
 
+	//materialDataSprite->enableLighting = false;
 	/*materialBufferView = CreateBufferView();;*/
+
 	// 頂点リソースにデータを書き込む
 	materialData = nullptr;
 	// 書き込むためのアドレスを取得
@@ -46,7 +48,8 @@ void Particle::Initialize(const Vector4& color)
 	// 色のデータを変数から読み込み
 	materialData->color = color;
 	materialData->uvTransform = MatrixTransform::MakeIdenttity4x4();
-	//materialData->enableLighting = true;
+	materialData->enableLighting = true;
+
 
 	// Transform変数の初期化
 
@@ -59,7 +62,7 @@ void Particle::Initialize(const Vector4& color)
 	for (uint32_t index = 0; index < kNumMaxInstance; ++index) {
 		instancingData[index].WVP =MatrixTransform::MakeIdenttity4x4();
 		instancingData[index].World = MatrixTransform::MakeIdenttity4x4();
-		//instancingData[index].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+		instancingData[index].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 
@@ -82,11 +85,15 @@ void Particle::Initialize(const Vector4& color)
 	indexDataSprite[4] = 3;
 	indexDataSprite[5] = 2;
 
+	transformUv = {
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
 
 	//std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 	//for (uint32_t index = 0; index < kNumMaxInstance; ++index) {
-	//	//particles_[index] = MakeNewParticle(randomEngine);
-	//	
+	//particles_[index] = MakeNewParticle(randomEngine);
 	//}
 
 
@@ -108,7 +115,7 @@ void Particle::Initialize(const Vector4& color)
 	instancingResorce =
 		CreateResources::CreateBufferResource(sizeof(TransformationMatrix) * kNunInstance);
 	//書き込むためのアドレスを取得
-	TransformationMatrix* instancingData = nullptr;
+	//TransformationMatrix* instancingData = nullptr;
 	instancingResorce->Map(0, nullptr, reinterpret_cast<void**>(&instancingData));
 
 
@@ -124,6 +131,16 @@ void Particle::Initialize(const Vector4& color)
 
 	
 	directX->GetDevice()->CreateShaderResourceView(instancingResorce.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
+
+	directionalLightData = nullptr;
+	directionalLightResource = CreateResources::CreateBufferResource(sizeof(DirectionalLight));
+	// 書き込むためのアドレスを取得
+	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData));
+
+	// デフォルト値はとりあえず以下のようにしておく
+	directionalLightData->color = { 1.0f,1.0f,1.0f,1.0f };
+	directionalLightData->direction = { 0.0f,-1.0f,0.0f };
+	directionalLightData->intensity = 1.0f;
 
 }
 
@@ -153,11 +170,11 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 		Matrix4x4 WorldMatrix =
 			MatrixTransform::AffineMatrix((Transfroms[index].scale), (Transfroms[index].rotation), (Transfroms[index].translate));
 
-		Matrix4x4 viewMatrix =
+		Matrix4x4 cameraMatrix =
 			MatrixTransform::AffineMatrix(camera.scale,camera.rotation,camera.translate);
 
-		Matrix4x4 cameraMatrix =
-			MatrixTransform::Inverse(viewMatrix);
+		Matrix4x4 viewMatrix =
+			MatrixTransform::Inverse(cameraMatrix);
 
 		Matrix4x4 projectionMatrix =
 			MatrixTransform::PerspectiveFovMatrix(0.45f,
@@ -179,7 +196,7 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	//形状を設定 psoに関しては設定しているものとは別.同じものを設定すると考えておけばいい
 	commands.m_pList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//マテリアルCBufferの場所を設定
-	commands.m_pList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	commands.m_pList->SetGraphicsRootConstantBufferView(0, directionalLightResource->GetGPUVirtualAddress());
 	//TransformationCBufferの場所を設定
 	commands.m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である

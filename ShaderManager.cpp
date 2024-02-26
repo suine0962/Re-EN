@@ -134,7 +134,7 @@ void ShaderManager::ShapeShader()
 	shaders.Light.pixelBlob =
 		ShaderManager::CompilerShaderFanc(
 			L"DirectionalLight.PS.hlsl",
-			L"ps_6_0_");
+			L"ps_6_0");
 
 	ShaderManager::Getinstance()->shaders_ = shaders;
 }

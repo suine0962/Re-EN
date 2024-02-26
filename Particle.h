@@ -21,6 +21,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "TextureManager.h"
+#include "DirectionalLight.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -32,7 +33,7 @@ class TextureManager;
 struct ParticleForGPU {
 	Matrix4x4 WVP;
 	Matrix4x4 World;
-	//Vector4 color;
+	Vector4 color;
 };
 
 struct Emitter {
@@ -125,10 +126,10 @@ private:
 	std::list<WorldTransform>  transforms_;
 	ParticleForGPU* instancingData = nullptr;
 	// 平行光源用
-	//Microsoft::WRL::ComPtr < ID3D12Resource> directionalLightResource;
+	Microsoft::WRL::ComPtr < ID3D12Resource> directionalLightResource;
 	// データを書き込む
-	//DirectionalLight* directionalLightData;
-	//WorldTransform transformUv;
+	DirectionalLight* directionalLightData;
+	WorldTransform transformUv;
 
 
 
