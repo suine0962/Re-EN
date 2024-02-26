@@ -19,15 +19,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 
 	unique_ptr<Model> model = make_unique< Model>();
+	unique_ptr<Model> REDmodel = make_unique<Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
 	unique_ptr<Sprite>uvSprite = make_unique<Sprite>();
 
 	uint32_t texHandle = TextureManager::LoadTexture("Resource/uvChecker.png");
 	uint32_t BlockTexHandle = TextureManager::LoadTexture("Resource/colisionCube/tex.png");
+	//uint32_t Redtex = TextureManager::LoadTexture("Resource/ball/RED.png");
 
 	model->CreateFromObj("colisionCube");
+	REDmodel->CreateFromObj("REDBall");
+
 	sprite->Initialize(new SpriteBoxState, { 0,0 }, { 500,200 });
-	sprite->SetTexHandle(BlockTexHandle);
+	sprite->SetTexHandle(texHandle);
 	sprite->SetColor({ 1,1,1,1.0f });
 	uvSprite->Initialize(new SpriteBoxState, { 800,500 }, { 500,200 });
 	uvSprite->SetTexHandle(texHandle);
@@ -92,9 +96,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		
 
-		model->SetUvRotate(uvrotate);
-		model->SetUvScale(uvScale);
-		model->SetUvTranslate(uvtranslate);
+		REDmodel->SetUvRotate(uvrotate);
+		REDmodel->SetUvScale(uvScale);
+		REDmodel->SetUvTranslate(uvtranslate);
 
 		worldTransform.UpdateMatrix();
 		viewProjection.UpdateMatrix();
@@ -139,9 +143,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 
 		//model->Draw(worldTransform, viewProjection);
-		sprite->Draw(SpriteWorldTransform);
-		uvSprite->Draw(uvTransform);
+		//sprite->Draw(SpriteWorldTransform);
+		//uvSprite->Draw(uvTransform);
+
+		REDmodel->Draw(worldTransform, viewProjection);
 		particle->Draw(texHandle, color, ParticleTransform);
+
+		
 
 		Suine::EndFlame();
 
