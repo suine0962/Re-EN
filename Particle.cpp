@@ -196,11 +196,14 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	//形状を設定 psoに関しては設定しているものとは別.同じものを設定すると考えておけばいい
 	commands.m_pList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//マテリアルCBufferの場所を設定
-	commands.m_pList->SetGraphicsRootConstantBufferView(0, directionalLightResource->GetGPUVirtualAddress());
+	commands.m_pList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//TransformationCBufferの場所を設定
 	commands.m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である
 	textureManager_->texCommand(texture);
+
+	//commands.m_pList->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+	// 
 	//directX->GetCommands().m_pList->SetGraphicsRootConstantBufferView(3,)
 	commands.m_pList->DrawIndexedInstanced(6, kNumMaxInstance, 0, 0,0);
 	// 
