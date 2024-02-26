@@ -4,7 +4,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	Vector4 color;
 
-	color = { 1,1,1 };
+	color = { 1,1,1,1 };
 
 	Suine::Initialize();
 
@@ -43,7 +43,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	uvTransform.translate = { 0,0,0 };
 	WorldTransform ParticleTransform = {};
 	ParticleTransform.Initialize();
-	ParticleTransform.translate = { 300.0f,200.0f };
+	ParticleTransform.translate = { 0.0f,0.0f,-10.0f };
 
 	ViewProjection viewProjection;
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
@@ -101,8 +101,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		SpriteWorldTransform.UpdateMatrix();
 		ParticleTransform.UpdateMatrix();
 		uvTransform.UpdateMatrix();
-		DebugTools::SetViewProjection(viewProjection);
-		DebugTools::Execute(0);
+
+		/*DebugTools::SetViewProjection(viewProjection);
+		DebugTools::Execute(0);*/
 
 		//真ん中のモデルおを動かす処理
 		if (input->PushKey(DIK_W))
@@ -136,9 +137,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			uvTransform.translate.x -= 0.5f;
 		}
 
-		model->Draw(worldTransform, viewProjection);
+		/*model->Draw(worldTransform, viewProjection);
 		sprite->Draw(SpriteWorldTransform);
-		uvSprite->Draw(uvTransform);
+		uvSprite->Draw(uvTransform);*/
 		particle->Draw(texHandle, color, ParticleTransform);
 
 		Suine::EndFlame();

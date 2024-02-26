@@ -108,7 +108,8 @@ void Particle::Initialize(const Vector4& color)
 	instancingResorce =
 		CreateResources::CreateBufferResource(sizeof(TransformationMatrix) * kNunInstance);
 	//書き込むためのアドレスを取得
-	TransformationMatrix* instancingData = nullptr;
+	//TransformationMatrix* instancingData = nullptr;
+
 	instancingResorce->Map(0, nullptr, reinterpret_cast<void**>(&instancingData));
 
 
@@ -151,13 +152,13 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 		//materialData->uvTransform = MatrixTransform::AffineMatrix()
 
 		Matrix4x4 WorldMatrix =
-			MatrixTransform::AffineMatrix((Transfroms[index].scale), (Transfroms[index].rotation), (Transfroms[index].rotation));
-
-		Matrix4x4 viewMatrix =
-			MatrixTransform::AffineMatrix(camera.scale,camera.rotation,camera.translate);
+			MatrixTransform::AffineMatrix((Transfroms[index].scale), (Transfroms[index].rotation), (Transfroms[index].translate));
 
 		Matrix4x4 cameraMatrix =
-			MatrixTransform::Inverse(viewMatrix);
+			MatrixTransform::AffineMatrix(camera.scale,camera.rotation,camera.translate);
+
+		Matrix4x4 viewMatrix =
+			MatrixTransform::Inverse(cameraMatrix);
 
 		Matrix4x4 projectionMatrix =
 			MatrixTransform::PerspectiveFovMatrix(0.45f,
