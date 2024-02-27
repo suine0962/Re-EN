@@ -47,7 +47,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	uvTransform.translate = { 0,0,0 };
 	WorldTransform ParticleTransform = {};
 	ParticleTransform.Initialize();
-	ParticleTransform.translate = { 0.0f,0.0f,-10.0f };
+	ParticleTransform.translate = { 0.0f,0.0f,-15.0f };
 
 	ViewProjection viewProjection;
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
@@ -96,9 +96,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		
 
-		REDmodel->SetUvRotate(uvrotate);
-		REDmodel->SetUvScale(uvScale);
-		REDmodel->SetUvTranslate(uvtranslate);
+		model->SetUvRotate(uvrotate);
+		model->SetUvScale(uvScale);
+		model->SetUvTranslate(uvtranslate);
 
 		worldTransform.UpdateMatrix();
 		viewProjection.UpdateMatrix();
@@ -148,7 +148,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//uvSprite->Draw(uvTransform);
 
 		REDmodel->Draw(worldTransform, viewProjection);
-		particle->Draw(texHandle, color, ParticleTransform);
+		//particle->Draw(texHandle, color, ParticleTransform);
 
 		
 
