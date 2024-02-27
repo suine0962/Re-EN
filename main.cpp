@@ -14,9 +14,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	input->Initialize();
 
-	particle->Initialize(color);
+	//particle->Initialize(color);
 
-	
+	DirectionalLight directionalLight;
 
 	unique_ptr<Model> model = make_unique< Model>();
 	unique_ptr<Model> REDmodel = make_unique<Model>();
@@ -25,7 +25,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	uint32_t texHandle = TextureManager::LoadTexture("Resource/uvChecker.png");
 	uint32_t BlockTexHandle = TextureManager::LoadTexture("Resource/colisionCube/tex.png");
-	//uint32_t Redtex = TextureManager::LoadTexture("Resource/ball/RED.png");
+	//uint32_t Redtex = TextureManager::LoadTexture("Resource/REDBall/RED.png");
 
 	model->CreateFromObj("colisionCube");
 	REDmodel->CreateFromObj("REDBall");
@@ -50,10 +50,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ParticleTransform.translate = { 0.0f,0.0f,-15.0f };
 
 	ViewProjection viewProjection;
-	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
+	viewProjection.Initialize({ 0.0f,0.0f,5.0f }, { 0.0f,0.0f,-15.0f });
 
-	BlockTexHandle;
-	texHandle;
+	//BlockTexHandle;
+	//texHandle;
 	Vector3 uvScale = { 1,1,1, };
 	Vector3 uvrotate = {};
 	Vector3 uvtranslate = {};
@@ -68,9 +68,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		input->Update();
 
-		/*ImGui::Begin("Debug camera");
-		ImGui::SliderFloat3("trans", &viewProjection.translation_.x, -15, 15);
-		ImGui::SliderFloat3("rotate", &viewProjection.rotation_.x, -1, 1);
+		ImGui::Begin("direction camera");
+		ImGui::SliderFloat3("color", &directionalLight.color.x, -15, 15);
+		ImGui::SliderFloat3("direction",&directionalLight.direction.x, -1, 1);
+		ImGui::SliderFloat("intensity", &directionalLight.intensity, 1, 1);
 		ImGui::End();
 
 
@@ -80,7 +81,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ImGui::DragFloat3("trans", &SpriteWorldTransform.translate.x, 0.1f);
 
 		ImGui::End();
-
+		/*
 		ImGui::Begin("collision");
 		ImGui::DragFloat3("scale", &worldTransform.scale.x, 0.1f);
 		ImGui::DragFloat3("rotate", &worldTransform.rotation.x, 0.1f);
@@ -96,9 +97,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		
 
-		model->SetUvRotate(uvrotate);
-		model->SetUvScale(uvScale);
-		model->SetUvTranslate(uvtranslate);
+		REDmodel->SetUvRotate(uvrotate);
+		REDmodel->SetUvScale(uvScale);
+		REDmodel->SetUvTranslate(uvtranslate);
 
 		worldTransform.UpdateMatrix();
 		viewProjection.UpdateMatrix();
@@ -122,12 +123,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		if (input->PushKey(DIK_A))
 		{
-			worldTransform.translate.x -= 0.2f;
+			worldTransform.rotation.x -= 0.2f;
 		}
 
 		if (input->PushKey(DIK_D))
 		{
-			worldTransform.translate.x += 0.2f;
+			worldTransform.rotation.x += 0.2f;
 		}
 
 		//右下uvCheckerSpriteを動かす処理

@@ -198,7 +198,7 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	//マテリアルCBufferの場所を設定
 	commands.m_pList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//TransformationCBufferの場所を設定
-	//commands.m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
+	commands.m_pList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である
 	textureManager_->texCommand(texture);
 
