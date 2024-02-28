@@ -39,12 +39,12 @@ void ModelObjState::Draw(Model* state, WorldTransform worldTransform, ViewProjec
 
 	materialData->color = state->GetColor();
 	//materialData->uvTransform = MatrixTransform::AffineMatrix(state->GetuvScale(), state->GetuvRotate(), state->GetuvTranslate());
-
+	materialData->shininess = 100.0f;
 
 
 	worldTransform.TransfarMatrix(resource_.wvpResource, viewprojection);
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
-	PSOProperty PSO = GraphicsPipelineManager::GetInstance()->GetPso().Sprite;
+	PSOProperty PSO = GraphicsPipelineManager::GetInstance()->GetPso().Light;
 
 	commands.m_pList->SetGraphicsRootSignature(PSO.rootSignature.Get());
 	commands.m_pList->SetPipelineState(PSO.GraphicsPipelineState.Get());

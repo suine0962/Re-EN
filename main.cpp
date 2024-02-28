@@ -50,7 +50,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ParticleTransform.translate = { 0.0f,0.0f,-15.0f };
 
 	ViewProjection viewProjection;
-	viewProjection.Initialize({ 0.0f,0.0f,5.0f }, { 0.0f,0.0f,-15.0f });
+	viewProjection.Initialize({ 0.0f,0.0f,0.0f }, { 0.0f,0.0f,-15.0f });
 
 	//BlockTexHandle;
 	//texHandle;
