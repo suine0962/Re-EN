@@ -71,7 +71,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ImGui::Begin("direction camera");
 		ImGui::SliderFloat3("color", &directionalLight.color.x, -15, 15);
 		ImGui::SliderFloat3("direction",&directionalLight.direction.x, -1, 1);
-		ImGui::SliderFloat("intensity", &directionalLight.intensity, 1, 1);
+		ImGui::SliderFloat3("intensity", &directionalLight.intensity, 1, 1);
 		ImGui::End();
 
 
