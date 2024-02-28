@@ -22,6 +22,7 @@
 #include "ViewProjection.h"
 #include "TextureManager.h"
 #include "DirectionalLight.h"
+#include "Camera.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -51,6 +52,8 @@ struct Particle_param
 	bool isAlive = false;
 	Vector3 Velocity{};
 };
+
+
 class Particle
 {
 public:
@@ -95,6 +98,7 @@ private:
 
 	VertexData* vertexDataSprite_ = nullptr;
 
+
 	// Sprite用のTransformationMatrix用のリソースを作る。Matrix4x4 1つ分のサイズを用意する
 	Microsoft::WRL::ComPtr < ID3D12Resource> transformationMatrixResouceSprite;
 	// データを書き込む
@@ -131,6 +135,7 @@ private:
 	DirectionalLight* directionalLightData;
 	WorldTransform transformUv;
 
+	
 
 
 	// Δtを定義。とりあえず60fps固定してあるが、

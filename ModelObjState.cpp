@@ -8,6 +8,23 @@ void ModelObjState::Initialize(Model* state)
 	resource_.wvpResource = CreateResources::CreateBufferResource(sizeof(TransformationMatrix));
 	resource_.BufferView = CreateResources::VertexCreateBufferView(sizeof(VertexData) * ModelData_.vertices.size(), resource_.Vertex,int( ModelData_.vertices.size()));
 
+
+	directionalLightData = nullptr;
+	directionalLightResource = CreateResources::CreateBufferResource(sizeof(DirectionalLight));
+	// 書き込むためのアドレスを取得
+	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData));
+
+	// デフォルト値はとりあえず以下のようにしておく
+	directionalLightData->color = { 1.0f,1.0f,1.0f,1.0f };
+	directionalLightData->direction = { 0.0f,-1.0f,0.0f };
+	directionalLightData->intensity = 1.0f;
+
+	cameraData = nullptr;
+	CameraResource = CreateResources::CreateBufferResource(sizeof(Camera));
+	CameraResource->Map(0, nullptr, reinterpret_cast<void**>(&cameraData));
+
+	cameraData->worldPosition = { 0.0f,0.0f,-15.0f };
+
 }
 
 void ModelObjState::Draw(Model* state, WorldTransform worldTransform, ViewProjection viewprojection)
@@ -21,7 +38,8 @@ void ModelObjState::Draw(Model* state, WorldTransform worldTransform, ViewProjec
 	memcpy(vertexData, ModelData_.vertices.data(), sizeof(VertexData) * ModelData_.vertices.size());
 
 	materialData->color = state->GetColor();
-	materialData->uvTransform = MatrixTransform::AffineMatrix(state->GetuvScale(), state->GetuvRotate(), state->GetuvTranslate());
+	//materialData->uvTransform = MatrixTransform::AffineMatrix(state->GetuvScale(), state->GetuvRotate(), state->GetuvTranslate());
+
 
 
 	worldTransform.TransfarMatrix(resource_.wvpResource, viewprojection);
@@ -37,6 +55,8 @@ void ModelObjState::Draw(Model* state, WorldTransform worldTransform, ViewProjec
 
 	commands.m_pList->SetGraphicsRootConstantBufferView(0, resource_.Material->GetGPUVirtualAddress());
 
+	commands.m_pList->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+	commands.m_pList->SetGraphicsRootConstantBufferView(4, CameraResource->GetGPUVirtualAddress());
 	TextureManager::texCommand(state->GetTexHandle());
 	commands.m_pList->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
 	

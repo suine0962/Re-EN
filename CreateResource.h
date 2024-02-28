@@ -49,9 +49,7 @@ struct ResourcePeroperty
 struct  Material
 {
 	Vector4 color;
-	Matrix4x4 uvTransform;
-	int32_t enableLighting;
-
+	float shininess;
 };
 
 class CreateResources

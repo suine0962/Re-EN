@@ -51,7 +51,7 @@ void ModelPlaneState::Draw(Model* state, WorldTransform worldTransform, ViewProj
 	indexData[3] = 1; indexData[4] = 3; indexData[5] = 2;
 
 	materialData->color = state->GetColor();
-	materialData->uvTransform = MatrixTransform::AffineMatrix(state->GetuvScale(), state->GetuvRotate(), state->GetuvTranslate());
+	//materialData->uvTransform = MatrixTransform::AffineMatrix(state->GetuvScale(), state->GetuvRotate(), state->GetuvTranslate());
 
 
 	worldTransform.TransfarMatrix(resource_.wvpResource,viewprojection);

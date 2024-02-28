@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include"IModelState.h"
 #include"Model.h"
-
+#include "Camera.h"
+#include "DirectionalLight.h"
 
 class ModelObjState :public IModelState
 {
@@ -26,6 +27,14 @@ private:
 	SModelData ModelData_ = {};
 
 	ResourcePeroperty resource_ = {};
+
+	Microsoft::WRL::ComPtr < ID3D12Resource> CameraResource;
+
+	Camera* cameraData;
+
+	Microsoft::WRL::ComPtr < ID3D12Resource> directionalLightResource;
+
+	DirectionalLight* directionalLightData;
 };
 
 

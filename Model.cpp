@@ -44,6 +44,7 @@ void Model::Draw(WorldTransform worldTransform, ViewProjection viewprojection)
 {
 	worldTransform_ = worldTransform;
 	state_->Draw(this, worldTransform_,viewprojection);
+
 }
 
 Vector4 Model::ColorConversion(uint32_t rgbaValue)

@@ -47,8 +47,9 @@ void Particle::Initialize(const Vector4& color)
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	// 色のデータを変数から読み込み
 	materialData->color = color;
-	materialData->uvTransform = MatrixTransform::MakeIdenttity4x4();
-	materialData->enableLighting = true;
+	materialData->shininess = 70.0f;
+	//materialData->uvTransform = MatrixTransform::MakeIdenttity4x4();
+	//materialData->enableLighting = true;
 
 
 	// Transform変数の初期化
@@ -132,15 +133,9 @@ void Particle::Initialize(const Vector4& color)
 	
 	directX->GetDevice()->CreateShaderResourceView(instancingResorce.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
 
-	directionalLightData = nullptr;
-	directionalLightResource = CreateResources::CreateBufferResource(sizeof(DirectionalLight));
-	// 書き込むためのアドレスを取得
-	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData));
+	//デフォルト値はとりあえず以下のようにしておく
 
-	// デフォルト値はとりあえず以下のようにしておく
-	directionalLightData->color = { 1.0f,1.0f,1.0f,1.0f };
-	directionalLightData->direction = { 0.0f,-1.0f,0.0f };
-	directionalLightData->intensity = 1.0f;
+
 
 }
 
@@ -156,6 +151,8 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	for (uint32_t index = 0; index < kNumMaxInstance; ++index)
 	{
 		Transfroms[index].scale = { 1.0f,1.0f,1.0f };
+
+
 		Transfroms[index].rotation = { 0.0f,0.0f,0.0f };
 		Transfroms[index].translate = { index * 0.1f,index * 0.1f,index * 0.1f };
 	}
@@ -185,6 +182,8 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 
 		instancingData[index].WVP = worldViewProjectionMatrix;
 		instancingData[index].World = WorldMatrix;
+
+		//cameraData->worldPosition = camera.translate;
 
 	}
 

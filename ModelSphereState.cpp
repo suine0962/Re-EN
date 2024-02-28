@@ -108,7 +108,7 @@ void ModelSphereState::Draw(Model* state, WorldTransform worldTransform, ViewPro
 
 	worldTransform.TransfarMatrix(resource_.wvpResource,viewprojection);
 	materialData->color = state->GetColor();
-	materialData->uvTransform = MatrixTransform::AffineMatrix(state->GetuvScale(), state->GetuvRotate(), state->GetuvTranslate());
+	//materialData->uvTransform = MatrixTransform::AffineMatrix(state->GetuvScale(), state->GetuvRotate(), state->GetuvTranslate());
 	CommandCall(state->GetTexHandle());
 }
 
