@@ -8,12 +8,13 @@ void CollisionManager::CheckAllCollision() {
 		++itrB;
 
 		for (; itrB != colliders_.end(); ++itrB) {
-			CheckCollisionPair(*(itrA), *(itrB));
+			CheckCollisionCircle(*(itrA), *(itrB));
 		}
 	}
 }
 
-void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* colliderB) {
+//‰~‚Ì“–‚½‚è”»’è
+void CollisionManager::CheckCollisionCircle(Collider* colliderA, Collider* colliderB) {
 	if (!(colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) ||
 	    !(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask())) {
 		return;
@@ -33,4 +34,18 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		colliderA->OnCollision();
 		colliderB->OnCollision();
 	}
+}
+
+
+
+void CollisionManager::CheckCollisionBox(Collider* colliderA, Collider* colliderB,Collider*collderC)
+{
+	if (!(colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) ||
+		!(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask())) {
+		return;
+	}
+
+	float 
+
+
 }

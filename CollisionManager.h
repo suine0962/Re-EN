@@ -9,6 +9,7 @@ public:
 	void ClearColliders() { colliders_.clear(); }
 	void CheckAllCollision();
 	void CheckCollisionPair(Collider* colliderA, Collider* colliderB);
+	void CheckCollisionBox(Collider* colliderA, Collider* colliderB);
 
 private:
 	std::list<Collider*> colliders_;

@@ -100,11 +100,11 @@ void ShaderManager::ShapeShader()
 	SShaders shaders;
 	shaders.shape.vertexBlob =
 		ShaderManager::CompilerShaderFanc(
-			L"ShapeObject3d.VS.hlsl",
+			L"Object3d.VS.hlsl",
 			L"vs_6_0");
 	shaders.shape.pixelBlob =
 		ShaderManager::CompilerShaderFanc(
-			L"ShapeObject3d.PS.hlsl",
+			L"Object3d.PS.hlsl",
 			L"ps_6_0");
 	shaders.sprite.vertexBlob =
 		ShaderManager::CompilerShaderFanc(
