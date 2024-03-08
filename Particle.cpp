@@ -188,8 +188,8 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	}
 
 
-	commands.m_pList->SetGraphicsRootSignature(pso_->GetInstance()->GetPso().Light.rootSignature.Get());
-	commands.m_pList->SetPipelineState(pso_->GetInstance()->GetPso().Light.GraphicsPipelineState.Get());//psoを設定
+	commands.m_pList->SetGraphicsRootSignature(pso_->GetInstance()->GetPso().particle.rootSignature.Get());
+	commands.m_pList->SetPipelineState(pso_->GetInstance()->GetPso().particle.GraphicsPipelineState.Get());//psoを設定
 	commands.m_pList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
 	commands.m_pList->IASetIndexBuffer(&indexBufferViewSprite);
 	//形状を設定 psoに関しては設定しているものとは別.同じものを設定すると考えておけばいい
@@ -201,7 +201,7 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	//SRVのDescriptorTableの先頭を設定 2はrootParameter[2]である
 	textureManager_->texCommand(texture);
 
-	commands.m_pList->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+	//commands.m_pList->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 	// 
 	//directX->GetCommands().m_pList->SetGraphicsRootConstantBufferView(3,)
 	commands.m_pList->DrawIndexedInstanced(6, kNumMaxInstance, 0, 0,0);

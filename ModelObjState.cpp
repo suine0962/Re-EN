@@ -56,6 +56,7 @@ void ModelObjState::Draw(Model* state, WorldTransform worldTransform, ViewProjec
 	commands.m_pList->SetGraphicsRootConstantBufferView(0, resource_.Material->GetGPUVirtualAddress());
 
 	commands.m_pList->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+
 	commands.m_pList->SetGraphicsRootConstantBufferView(4, CameraResource->GetGPUVirtualAddress());
 	TextureManager::texCommand(state->GetTexHandle());
 	commands.m_pList->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());

@@ -9,9 +9,8 @@ GraphicsPipelineManager* GraphicsPipelineManager::GetInstance()
 void GraphicsPipelineManager::Initialize()
 {
 	CreatePSO();
-
-
 }
+
 
 void GraphicsPipelineManager::CreatePSO()
 {
