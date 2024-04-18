@@ -46,6 +46,8 @@ void ModelObjState::Draw(Model* state, WorldTransform worldTransform, ViewProjec
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
 	PSOProperty PSO = GraphicsPipelineManager::GetInstance()->GetPso().Light;
 
+
+	//行列の計算
 	commands.m_pList->SetGraphicsRootSignature(PSO.rootSignature.Get());
 	commands.m_pList->SetPipelineState(PSO.GraphicsPipelineState.Get());
 

@@ -8,8 +8,8 @@ public:
 	void AddCollider(Collider* collider) { colliders_.push_back(collider); }
 	void ClearColliders() { colliders_.clear(); }
 	void CheckAllCollision();
-	void CheckCollisionPair(Collider* colliderA, Collider* colliderB);
-	void CheckCollisionBox(Collider* colliderA, Collider* colliderB);
+	void CheckCollisionCircle(Collider* colliderA, Collider* colliderB);
+	void CheckCollisionBox(Collider* colliderA, Collider* colliderB,Collider*colliderC);
 
 private:
 	std::list<Collider*> colliders_;
