@@ -28,6 +28,9 @@ void ModelSphereState::Draw(Model* state, WorldTransform worldTransform, ViewPro
 	//resource_.Light->Map(0, nullptr, reinterpret_cast<void**>(&lightData));
 	resource_.Index->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 
+
+
+
 #pragma region 球の座標処理
 	const float LON_EVERY = float(std::numbers::pi) * 2.0f / float(VertexNum);
 

@@ -1,5 +1,7 @@
 #include "ModelObjState.h"
 
+Assimp::Importer importer;
+
 void ModelObjState::Initialize(Model* state)
 {
 	ModelData_ = LoadFile(state,state->GetObjDirectoryPath());
@@ -76,7 +78,13 @@ SModelData ModelObjState::LoadFile(Model *state,const string& directoryPath)
 	vector<Vector2> texcoords;
 	string line;
 	ifstream file("Resource/" + directoryPath + "/" + directoryPath + ".obj");
-	assert(file.is_open());
+
+	//assimp
+	const aiScene* scene = importer.ReadFile(directoryPath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
+	assert(scene->HasMeshes());//メッシュがないのには反応しない
+	//
+
+	assert(file.is_open());//ファイルに不備があったら止める
 
 	while (getline(file, line))
 	{

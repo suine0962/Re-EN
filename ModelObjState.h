@@ -3,6 +3,11 @@
 #include"Model.h"
 #include "Camera.h"
 #include "DirectionalLight.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+
 
 class ModelObjState :public IModelState
 {
