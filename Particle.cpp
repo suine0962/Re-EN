@@ -151,8 +151,6 @@ void Particle::Draw(uint32_t texture, const Vector4& color, WorldTransform camer
 	for (uint32_t index = 0; index < kNumMaxInstance; ++index)
 	{
 		Transfroms[index].scale = { 1.0f,1.0f,1.0f };
-
-
 		Transfroms[index].rotation = { 0.0f,0.0f,0.0f };
 		Transfroms[index].translate = { index * 0.1f,index * 0.1f,index * 0.1f };
 	}
