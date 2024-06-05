@@ -26,6 +26,8 @@ private:
 
 	SModelData LoadFile(Model *state,const string& directoryPath);
 
+	SModelData LoadassimpFile(Model* state, const string& directoryPath);
+
 	MaterialData LoadMaterialTemplateFile(const string& directoryPath, const string& filename);
 
 
