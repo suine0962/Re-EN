@@ -16,9 +16,9 @@
 // コンストラクタ
 GameManager::GameManager() {
 	// 各シーンの排列
-	sceneArr_[TITLE] = std::make_unique<TitleScene>();
-	sceneArr_[STAGE] = std::make_unique<GameScene>();
-	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
+	//sceneArr_[TITLE] = make_unique<TitleScene>();
+	//sceneArr_[STAGE] = make_unique<GameScene>();
+	//sceneArr_[CLEAR] = make_unique<ClearScene>();
 
 	// 初期シーンの設定
 	//sceneNo_ = TITLE; //GameManagerのクラスにISceneを継承させて触れるようにしているため正しいかは怪しい
