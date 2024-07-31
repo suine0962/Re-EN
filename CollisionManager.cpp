@@ -1,4 +1,4 @@
-#include "CollisionManager.h"
+ï»¿#include "CollisionManager.h"
 
 void CollisionManager::CheckAllCollision() {
 	std::list<Collider*>::iterator itrA = colliders_.begin();
@@ -13,7 +13,7 @@ void CollisionManager::CheckAllCollision() {
 	}
 }
 
-//‰~‚Ì“–‚½‚è”»’è
+//å††ã®å½“ãŸã‚Šåˆ¤å®š
 void CollisionManager::CheckCollisionCircle(Collider* colliderA, Collider* colliderB) {
 	if (!(colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) ||
 	    !(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask())) {
@@ -38,14 +38,14 @@ void CollisionManager::CheckCollisionCircle(Collider* colliderA, Collider* colli
 
 
 
-void CollisionManager::CheckCollisionBox(Collider* colliderA, Collider* colliderB,Collider*collderC)
-{
-	if (!(colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) ||
-		!(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask())) {
-		return;
-	}
-
-	//‹éŒ`‚Ì“–‚½‚è”»’è
-
-
-}
+//void CollisionManager::CheckCollisionBox(Collider* colliderA, Collider* colliderB,Collider*collderC)
+//{
+//	if (!(colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) ||
+//		!(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask())) {
+//		return;
+//	}
+//
+//	//çŸ©å½¢ã®å½“ãŸã‚Šåˆ¤å®š
+//
+//
+//}

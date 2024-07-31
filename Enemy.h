@@ -1,6 +1,6 @@
 #pragma once
 #include "ViewProjection.h"
-#include "Pch.h"
+#include "Vsh.h"
 #include "Sprite.h"
 #include "WorldTransform.h"
 #include "TextureManager.h"

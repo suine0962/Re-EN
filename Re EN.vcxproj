@@ -109,6 +109,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MathQuaternion.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelLineState.cpp" />
@@ -159,6 +160,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ISpriteState.h" />
     <ClInclude Include="LogManager.h" />
+    <ClInclude Include="MathQuaternion.h" />
     <ClInclude Include="Matrix2x2.h" />
     <ClInclude Include="Matrix3x3.h" />
     <ClInclude Include="Matrix4x4.h" />
