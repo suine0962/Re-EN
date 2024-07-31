@@ -1,4 +1,4 @@
-#include "GameScene.h"
+ï»¿#include "GameScene.h"
 #include "TitleScene.h"
 #include "ClearScene.h"
 #include "Input.h"
@@ -8,10 +8,10 @@
 class GameManager
 {
 private:
-	// ƒV[ƒ“‚ğ•Û‚·‚éƒƒ“ƒo•Ï”
+	// ã‚·ãƒ¼ãƒ³ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ³ãƒå¤‰æ•°
 	std::unique_ptr<IScene> sceneArr_[3];
 
-	// ‚Ç‚ÌƒXƒe[ƒW‚ğŒÄ‚Ño‚·‚©‚ğŠÇ—‚·‚é•Ï”
+	// ã©ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’å‘¼ã³å‡ºã™ã‹ã‚’ç®¡ç†ã™ã‚‹å¤‰æ•°
 	int currentSceneNo_ = 0;
 	int prevSceneNo_ = 0;
 public:

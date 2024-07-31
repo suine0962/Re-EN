@@ -1,4 +1,4 @@
-#include "GameManager.h"
+ï»¿#include "GameManager.h"
 #include <Windows.h>
 #include "WinApp.h"
 #include "DirectXCommon.h"
@@ -13,15 +13,15 @@
 #include "MatrixTransform.h"
 #include "Vsh.h"
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 GameManager::GameManager() {
-	// ŠeƒV[ƒ“‚Ì”r—ñ
-	//sceneArr_[TITLE] = make_unique<TitleScene>();
-	//sceneArr_[STAGE] = make_unique<GameScene>();
-	//sceneArr_[CLEAR] = make_unique<ClearScene>();
+	// å„ã‚·ãƒ¼ãƒ³ã®æ’åˆ—
+	sceneArr_[TITLE] = make_unique<TitleScene>();
+	sceneArr_[STAGE] = make_unique<GameScene>();
+	sceneArr_[CLEAR] = make_unique<ClearScene>();
 
-	// ‰ŠúƒV[ƒ“‚Ìİ’è
-	//sceneNo_ = TITLE; //GameManager‚ÌƒNƒ‰ƒX‚ÉIScene‚ğŒp³‚³‚¹‚ÄG‚ê‚é‚æ‚¤‚É‚µ‚Ä‚¢‚é‚½‚ß³‚µ‚¢‚©‚Í‰ö‚µ‚¢
+	// åˆæœŸã‚·ãƒ¼ãƒ³ã®è¨­å®š
+	//sceneNo_ = TITLE; //GameManagerã®ã‚¯ãƒ©ã‚¹ã«ISceneã‚’ç¶™æ‰¿ã•ã›ã¦è§¦ã‚Œã‚‹ã‚ˆã†ã«ã—ã¦ã„ã‚‹ãŸã‚æ­£ã—ã„ã‹ã¯æ€ªã—ã„
 	//input_ = Input::GetInstance();
 }
 
@@ -51,15 +51,15 @@ int GameManager::Run() {
 	Input* input = Input::GetInstance();
 	input->Initialize();
 
-	// ƒEƒBƒ“ƒhƒE‚Ì~ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚é‚Ü‚Åƒ‹[ƒv
-	while (true)  // ƒQ[ƒ€ƒ‹[ƒv
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®Ã—ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã‚‹ã¾ã§ãƒ«ãƒ¼ãƒ—
+	while (true)  // ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
 	{
-		// Windows‚ÌƒƒbƒZ[ƒWˆ—
+		// Windowsã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†
 		if (winApp->ProcessMessage()) {
-			// ƒQ[ƒ€ƒ‹[ƒv‚ğ”²‚¯‚é
+			// ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 			break;
 		}
-		// ƒQ[ƒ€‚Ìˆ—‚ÌŠJn
+		// ã‚²ãƒ¼ãƒ ã®å‡¦ç†ã®é–‹å§‹
 		DirctX->BeginFlame();
 		input->Update();
 
@@ -67,46 +67,46 @@ int GameManager::Run() {
 		ImGui::Text("%d", IScene::GetSceneNo());
 		ImGui::End();
 
-		// ƒV[ƒ“‚Ìƒ`ƒFƒbƒN
+		// ã‚·ãƒ¼ãƒ³ã®ãƒã‚§ãƒƒã‚¯
 		prevSceneNo_ = currentSceneNo_;
 		currentSceneNo_ = sceneArr_[currentSceneNo_]->GetSceneNo();
 
-		// ƒV[ƒ“•ÏXƒ`ƒFƒbƒN
+		// ã‚·ãƒ¼ãƒ³å¤‰æ›´ãƒã‚§ãƒƒã‚¯
 		if (prevSceneNo_ != currentSceneNo_) {
 			sceneArr_[currentSceneNo_]->Init();
 		}
 
 		///
-		/// «XVˆ—‚±‚±‚©‚ç
+		/// â†“æ›´æ–°å‡¦ç†ã“ã“ã‹ã‚‰
 		///
-		sceneArr_[currentSceneNo_]->Update(); // ƒV[ƒ“‚²‚Æ‚ÌXVˆ—
+		sceneArr_[currentSceneNo_]->Update(); // ã‚·ãƒ¼ãƒ³ã”ã¨ã®æ›´æ–°å‡¦ç†
 
 		///
-		/// ªXVˆ—‚±‚±‚Ü‚Å
+		/// â†‘æ›´æ–°å‡¦ç†ã“ã“ã¾ã§
 		///
 
 		///
-		/// «•`‰æˆ—‚±‚±‚©‚ç
+		/// â†“æç”»å‡¦ç†ã“ã“ã‹ã‚‰
 		///
 
 		sceneArr_[currentSceneNo_]->Draw();
 
 
 		///
-		/// ª•`‰æˆ—‚±‚±‚Ü‚Å
+		/// â†‘æç”»å‡¦ç†ã“ã“ã¾ã§
 		///
 
-		// ƒtƒŒ[ƒ€‚ÌI—¹
-		//ƒXƒƒbƒvƒ`ƒF[ƒ“
+		// ãƒ•ãƒ¬ãƒ¼ãƒ ã®çµ‚äº†
+		//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³
 		DirctX->EndFlame();
-		// ESCƒL[‚ª‰Ÿ‚³‚ê‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
+		// ESCã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 		if (sceneArr_[currentSceneNo_]->GameClose()) {
 			sceneArr_[currentSceneNo_]->Release();
 			break;
 		}
 	}
 
-	//o—ÍƒEƒBƒ“ƒhƒE‚Ö‚Ì•¶šo—Í
+	//å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¸ã®æ–‡å­—å‡ºåŠ›
 	OutputDebugStringA("Hello,DirectX!\n");
 
 
