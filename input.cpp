@@ -1,8 +1,29 @@
 #include "Input.h"
 #include "WinApp.h"
 #include <Xinput.h>
+#include "Vsh.h"
+#include <math.h>
+#include <iostream>
 //Xinput.lib; Xinput9_1_0.lib
 #pragma comment(lib, "Xinput.lib")
+
+void ProcessStickInput(SHORT thumbX, SHORT thumbY, const char* stickName) {
+	// スティックのデッドゾーンを設定
+	const int DEADZONE = XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+
+	// デッドゾーンを考慮したスティック入力の処理
+	if ((thumbX > DEADZONE || thumbX < -DEADZONE) ||
+		(thumbY > DEADZONE || thumbY < -DEADZONE)) {
+
+		float magnitude = sqrt(thumbX * thumbX + thumbY * thumbY);
+
+		// 正規化して -1.0 ～ 1.0 の範囲に変換
+		float normLX = thumbX / 32767.0f;
+		float normLY = thumbY / 32767.0f;
+
+		std::cout << stickName << " X: " << normLX << " Y: " << normLY << std::endl;
+	}
+}
 
 void Input::Initialize() {
 	WinApp* WinApp = WinApp::GetInstance();
@@ -35,13 +56,25 @@ void Input::Initialize() {
 		// Simply get the state of the controller from XInput.
 		dwResult = XInputGetState(i, &state);
 
-		if (dwResult == ERROR_SUCCESS)
-		{
-			// Controller is connected
+		if (dwResult == ERROR_SUCCESS) {
+			std::cout << "Controller connected" << std::endl;
+
+			// 左スティックの入力を処理
+			ProcessStickInput(state.Gamepad.sThumbLX, state.Gamepad.sThumbLY, "Left Stick");
+
+			// 右スティックの入力を処理
+			ProcessStickInput(state.Gamepad.sThumbRX, state.Gamepad.sThumbRY, "Right Stick");
+
+			// ボタンの状態を確認
+			if (state.Gamepad.wButtons & XINPUT_GAMEPAD_A) {
+				std::cout << "A button pressed" << std::endl;
+			}
+			if (state.Gamepad.wButtons & XINPUT_GAMEPAD_B) {
+				std::cout << "B button pressed" << std::endl;
+			}
 		}
-		else
-		{
-			// Controller is not connected
+		else {
+			std::cout << "Controller not connected" << std::endl;
 		}
 	}
 
@@ -57,6 +90,8 @@ void Input::Update() {
 
 	keyboard->GetDeviceState(sizeof(keys), keys);
 }
+
+
 
 bool Input::PushKey(BYTE keyNumber)
 {

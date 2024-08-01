@@ -21,8 +21,10 @@ public:
 	void Update();
 	void Draw();
 	void Release();
+	void ProcessStickInput();
 
-	/// <summary>
+
+	/// <summary>uu
 	/// キーの押下をチェック
 	/// </summary>
 	/// <param name="keyNumber"></param>
