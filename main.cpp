@@ -1,5 +1,6 @@
 ﻿#include"Suine.h"
 
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	Vector4 color;
@@ -14,6 +15,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	input->Initialize();
 
+	
 	//particle->Initialize(color);
 
 	DirectionalLight directionalLight;
@@ -109,6 +111,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		//DebugTools::SetViewProjection(viewProjection);
 		//DebugTools::Execute(0);
+
+
+		XINPUT_STATE Gamepad{};
+		Input::GetInstance()->GetJoystickState(Gamepad);
+		if (Gamepad.Gamepad.wButtons & XINPUT_GAMEPAD_A) {
+
+			worldTransform.translate.y += 0.2f;
+
+		}
+
 
 		//真ん中のモデルおを動かす処理
 		if (input->PushKey(DIK_W))

@@ -3,6 +3,12 @@
 #include <dinput.h>
 #include <cassert>
 #include <wrl.h>
+#include "WinApp.h"
+#include <Xinput.h>
+#include "Vsh.h"
+#include <math.h>
+#include <iostream>
+#include <cmath>
 //#include <Xinput.h>
 
 #pragma comment(lib, "dinput8.lib")
@@ -21,7 +27,7 @@ public:
 	void Update();
 	void Draw();
 	void Release();
-	void ProcessStickInput();
+	
 
 
 	/// <summary>uu
@@ -32,6 +38,8 @@ public:
 	bool PushKey(BYTE keyNumber);
 
 	bool TriggerKey(BYTE keyNumber);
+
+	bool GetJoystickState(XINPUT_STATE& state);
 
 	// namespace省略
 	template <class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
