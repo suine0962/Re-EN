@@ -117,6 +117,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="ModelPlaneState.cpp" />
     <ClCompile Include="ModelSphereState.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Vsh.cpp" />
     <ClCompile Include="PlayerBullet.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

@@ -40,19 +40,19 @@ void Player::Updata()
 		return false;
 		});
 
-	if(input_->PressKey(DIK_W))
+	if(input_->PushKey(DIK_W))
 	{
 		worldTransform_.translate.y -= 5.0f;
 	}
-	if (input_->PressKey(DIK_S))
+	if (input_->PushKey(DIK_S))
 	{
 		worldTransform_.translate.y += 5.0f;
 	}
-	if (input_->PressKey(DIK_A))
+	if (input_->PushKey(DIK_A))
 	{
 		worldTransform_.translate.x -= 5.0f;
 	}
-	if (input_->PressKey(DIK_D))
+	if (input_->PushKey(DIK_D))
 	{
 		worldTransform_.translate.x += 5.0f;
 	}
@@ -88,3 +88,38 @@ void Player::Attack()
 
 	}
 }
+
+void Player::PlayerTilt()
+{
+
+
+
+}
+
+void Player::PlayerRowling()
+{
+	// Vector3で指定された回転角度 (度単位)
+	Vector3 rotationEulerAngles(30.0f, 45.0f, 60.0f);
+
+	// 度をラジアンに変換
+	float pitch = rotationEulerAngles.x * (3.14159265f / 180.0f);
+	float yaw = rotationEulerAngles.y * (3.14159265f / 180.0f);
+	float roll = rotationEulerAngles.z * (3.14159265f / 180.0f);
+
+	// 各軸に対する回転クォータニオンの生成
+	Quaternion qPitch = MathQuaternion::MakeRotateAxisAngleQuaternion(Vector3(1, 0, 0), pitch);
+	Quaternion qYaw = MathQuaternion::MakeRotateAxisAngleQuaternion(Vector3(0, 1, 0), yaw);
+	Quaternion qRoll = MathQuaternion::MakeRotateAxisAngleQuaternion(Vector3(0, 0, 1), roll);
+
+	// 総合的な回転クォータニオンを計算
+	Quaternion combinedRotation =  MathQuaternion::MultiplyQuaternions
+	(qYaw,MathQuaternion::MultiplyQuaternions(qPitch, qRoll));
+
+	// オブジェクトに新しい回転クォータニオンを設定
+	model_->SetUvRotateQuaternion(combinedRotation);
+
+}
+
+
+
+

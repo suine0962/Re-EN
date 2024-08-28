@@ -31,7 +31,7 @@ public:
 	static Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
 	static void invertQuaternion(Quaternion* q);
 	static Quaternion Slerp(Quaternion& q0, Quaternion& q1, float t);
-
+	static Quaternion MultiplyQuaternions(const Quaternion& q1, const Quaternion& q2);
 
 };
 

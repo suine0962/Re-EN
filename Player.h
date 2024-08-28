@@ -1,6 +1,6 @@
 #pragma once
 #include "ViewProjection.h"
-#include "Pch.h"
+#include "Vsh.h"
 #include "Sprite.h"
 #include "WorldTransform.h"
 #include "TextureManager.h"
@@ -12,6 +12,7 @@
 #include "CollisionConfig.h"
 #include "CollisionManager.h"
 #include <list>
+#include "MathQuaternion.h"
 
 class Player:public Collider
 {
@@ -34,6 +35,10 @@ public:
 
 	Vector3 GetWorldPosition() override;
 
+	void PlayerTilt();
+
+	void PlayerRowling();
+
 private:
 	WorldTransform worldTransform_;
 	Model* model_=nullptr;
@@ -43,5 +48,7 @@ private:
 	ViewProjection viewProjection_;
 
 	std::list<PlayerBullet*> bullets_;
+
+
 };
 

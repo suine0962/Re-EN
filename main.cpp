@@ -120,7 +120,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			worldTransform.translate.y += 0.2f;
 
 		}
-
+		if ((float)Gamepad.Gamepad.sThumbLX / SHRT_MAX * 0.04f)
+		{
+			worldTransform.translate.x += 1.0f;
+		}
 
 		//真ん中のモデルおを動かす処理
 		if (input->PushKey(DIK_W))
