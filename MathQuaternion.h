@@ -5,10 +5,10 @@
 #define _USE_MATH_DEFINES
 
 struct Quaternion {
+	float w;
 	float x;
 	float y;
 	float z;
-	float w;
 };
 
 class MathQuaternion

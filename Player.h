@@ -13,6 +13,9 @@
 #include "CollisionManager.h"
 #include <list>
 #include "MathQuaternion.h"
+#include "PlayerRotate.h"
+
+
 
 class Player:public Collider
 {
@@ -37,7 +40,9 @@ public:
 
 	void PlayerTilt();
 
-	void PlayerRowling();
+	void ApplyRotation(const Quaternion& q);
+
+	void RotatePlayer();
 
 private:
 	WorldTransform worldTransform_;
@@ -49,6 +54,6 @@ private:
 
 	std::list<PlayerBullet*> bullets_;
 
-
+	Quaternion rotation_;
 };
 
