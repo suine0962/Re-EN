@@ -4,9 +4,7 @@
 #include <memory> // for unique_ptr
 #include <list> // for list
 
-struct matrix4x4 {
-    float m[4][4];
-};
+
 
 struct Quaternion {
     float w, x, y, z;
@@ -43,8 +41,8 @@ struct Quaternion {
     }
 
     // クオータニオンを行列に変換する
-    matrix4x4 toMatrix() const {
-        matrix4x4 mat;
+    Matrix4x4 toMatrix() const {
+        Matrix4x4 mat;
         float xx = x * x;
         float yy = y * y;
         float zz = z * z;

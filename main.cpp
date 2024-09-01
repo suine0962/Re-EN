@@ -20,6 +20,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	DirectionalLight directionalLight;
 
+
+
+	//ここから
+
+
 	unique_ptr<Model> model = make_unique< Model>();
 	unique_ptr<Model> REDmodel = make_unique<Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
