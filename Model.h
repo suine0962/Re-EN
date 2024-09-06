@@ -38,7 +38,6 @@ public:
 	void SetTexHandle(uint32_t texHandle) { texHandle_ = texHandle; }
 	void SetUvScale(Vector3 uvScale) { uvScale_ = uvScale; }
 	void SetUvRotate(Vector3 uvRotate) { uvRotate_ = uvRotate; }
-	void SetUvRotateQuaternion(Quaternion uvRotate) { uvRotateQuaternion_ = uvRotate; }
 	void SetUvTranslate(Vector3 uvTranslate) { uvTranslate_ = uvTranslate; }
 	void SetColor(Vector4 color) { color_ = color; }
 
@@ -98,7 +97,6 @@ private:
 	Vector3 uvRotate_ = {0,0,0};
 	Vector3 uvTranslate_ = {0,0,0};
 	string directoryPath_ = {};
-	Quaternion uvRotateQuaternion_ = { 0,0,0,0 };
 
 	IModelState* state_ = nullptr;
 };

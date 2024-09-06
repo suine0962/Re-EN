@@ -13,12 +13,17 @@ public:
 	/// </summary>
 	static Matrix4x4 Add(Matrix4x4 m1, Matrix4x4 m2);
 
+	static Vector3 Subtract(const Vector3& v1, const Vector3& v2);
+
 	static Vector3 VectorAdd(Vector3 a, Vector3 b);
 	/// <summary>
 	/// 掛け算
 	/// </summary>
 	static Matrix4x4 Multiply(Matrix4x4 m1, Matrix4x4 m2);
 
+	static Vector3 Normalize(const Vector3& v);
+
+	static Vector3 VectorMultiply(float scalar, const Vector3& v);
 #pragma endregion
 
 #pragma region 行列の変換

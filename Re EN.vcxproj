@@ -91,10 +91,15 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClearScene.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="CreateResource.cpp" />
     <ClCompile Include="DebugTools.cpp" />
     <ClCompile Include="DirectXCommon.cpp" />
+    <ClCompile Include="GameManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GraphicsPipelineManager.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
@@ -107,6 +112,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="IScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathQuaternion.cpp" />
@@ -118,7 +126,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="ModelSphereState.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerRotate.cpp" />
+    <ClCompile Include="skydome.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Vsh.cpp" />
     <ClCompile Include="PlayerBullet.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -135,6 +144,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ClearScene.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionConfig.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -142,9 +152,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DebugTools.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="DirectXCommon.h" />
-    <ClInclude Include="Enemy.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="GraphicsPipelineManager.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="ICommand.h" />
@@ -160,6 +169,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="IModelState.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IScene.h" />
     <ClInclude Include="ISpriteState.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="MathQuaternion.h" />
@@ -173,7 +183,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="ModelPlaneState.h" />
     <ClInclude Include="ModelSphereState.h" />
     <ClInclude Include="Particle.h" />
-    <ClInclude Include="PlayerRotate.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="skydome.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Vsh.h" />
     <ClInclude Include="Player.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

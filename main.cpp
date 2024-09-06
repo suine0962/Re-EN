@@ -1,4 +1,6 @@
 ﻿#include"Suine.h"
+#include "Player.h"
+#include "Enemy.h"
 
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
@@ -25,7 +27,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ここから
 
 
-	unique_ptr<Model> model = make_unique< Model>();
+	Model* model =new Model();
 	unique_ptr<Model> REDmodel = make_unique<Model>();
 	unique_ptr<Sprite>sprite = make_unique<Sprite>();
 	unique_ptr<Sprite>uvSprite = make_unique<Sprite>();
@@ -64,6 +66,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Vector3 uvScale = { 1,1,1, };
 	Vector3 uvrotate = {};
 	Vector3 uvtranslate = {};
+
+	Player* player = new Player();
+
+
+	player->Initialize(model, texHandle, worldTransform.translate);
 
 	while (true)
 	{

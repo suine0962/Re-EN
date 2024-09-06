@@ -8,7 +8,7 @@
 #include "CollisionConfig.h"
 #include "CollisionManager.h"
 
-class PlayerBullet:public Collider {
+class PlayerBullet : public Collider {
 public:
 
 	/// <summary>

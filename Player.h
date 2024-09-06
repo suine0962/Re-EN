@@ -1,9 +1,8 @@
-#pragma once
+﻿#pragma once
 #include "ViewProjection.h"
 #include "Vsh.h"
 #include "Sprite.h"
 #include "WorldTransform.h"
-#include "TextureManager.h"
 #include "Sprite.h"
 #include "input.h"
 #include "Model.h"
@@ -12,48 +11,71 @@
 #include "CollisionConfig.h"
 #include "CollisionManager.h"
 #include <list>
-#include "MathQuaternion.h"
-#include "PlayerRotate.h"
 
-
-
-class Player:public Collider
-{
+/// <summary>
+/// 自キャラ
+/// </summary>
+class Player : public Collider {
 public:
-
-	Player();
 	~Player();
 
-	void Initilize();
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name= "model">モデル</param>
+	/// <param name= "textureHandle">テクスチャハンドル</param>
+	void Initialize(Model* model, uint32_t& textureHandle, Vector3 position);
 
-	void Updata();
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update(const ViewProjection viewProjection);
 
-	void Draw(ViewProjection viewProjection);
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name= "viewProjection">ビュープロジェクション（参照渡し）</param>
+	void Draw(ViewProjection& viewProjection);
 
+	//void DrawUI();
+
+	/// <summary>
+	/// 回転
+	/// </summary>
+	void Rotate();
+
+	/// <summary>
+	/// 攻撃
+	/// </summary>
 	void Attack();
-
-	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 
 	void OnCollision() override;
 
 	Vector3 GetWorldPosition() override;
 
-	void PlayerTilt();
+	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 
-	void ApplyRotation(const Quaternion& q);
+	/*void SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
 
-	void RotatePlayer();
+	void SetReticle(const ViewProjection viewProjection);*/
 
 private:
+	// ワールド変換データ
 	WorldTransform worldTransform_;
-	Model* model_=nullptr;
-	uint32_t tex_ = 0;
+	// モデル
+	Model* model_ = nullptr;
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0u;
+	// 自キャラ
+	Player* player_ = nullptr;
+	// キーボード入力
 	Input* input_ = nullptr;
-	unique_ptr<Sprite>sprite_;
-	ViewProjection viewProjection_;
 
+	WorldTransform worldTransform3DReticle_;
+	Sprite* sprite2DReticle_ = nullptr;
+
+	// リスト
 	std::list<PlayerBullet*> bullets_;
 
-	Quaternion rotation_;
+	ResourcePeroperty resource_ = {};
 };
-

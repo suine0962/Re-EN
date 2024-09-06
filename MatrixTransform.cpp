@@ -15,9 +15,30 @@ Matrix4x4 MatrixTransform::Add(Matrix4x4 m1, Matrix4x4 m2)
 	return result;
 }
 
+Vector3 MatrixTransform::Subtract(const Vector3& v1, const Vector3& v2)
+{
+	return { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
+}
+
+
 Vector3 MatrixTransform::VectorAdd(Vector3 a, Vector3 b)
 {
 	return { a.x + b.x, a.y + b.y, a.z + b.z };
+}
+
+Vector3 MatrixTransform::VectorMultiply(float scalar, const Vector3& v)
+{
+	return { v.x * scalar, v.y * scalar, v.z * scalar };
+}
+
+float Length(const Vector3& v) { return sqrtf((v.x * v.x) + (v.y * v.y) + (v.z * v.z)); }
+
+Vector3 MatrixTransform::Normalize(const Vector3& v) {
+	float len = Length(v);
+	if (len != 0) {
+		return { v.x / len, v.y / len, v.z / len };
+	}
+	return v;
 }
 
 Matrix4x4 MatrixTransform::Multiply(Matrix4x4 m1, Matrix4x4 m2)
@@ -62,6 +83,8 @@ Matrix4x4 MatrixTransform::Multiply(Matrix4x4 m1, Matrix4x4 m2)
 
 	return result;
 }
+
+
 
 Matrix4x4 MatrixTransform::Identity()
 {
