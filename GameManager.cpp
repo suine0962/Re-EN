@@ -27,6 +27,11 @@ int GameManager::Run() {
     Input* input = Input::GetInstance();
     input->Initialize();
 
+    Particle* particle = new Particle();
+    
+    DirectionalLight directionalLight;
+
+
     // 各シーンの初期化
     sceneArr_[currentSceneNo_]->Init();
 
