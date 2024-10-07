@@ -1,17 +1,12 @@
 #include "Player.h"
-#include <cassert>
-#include "MatrixTransform.h"
-#include "ImGuiManager.h"
-#include "Collider.h"
-#include "GameScene.h"
-#include "input.h"
+
 
 Player::~Player() {
 	for (PlayerBullet* bullet : bullets_) {
 		delete bullet;
 	}
 
-	//delete sprite2DReticle_;
+	delete sprite2DReticle_;
 }
 
 void Player::Initialize(Model* model, uint32_t& textureHandle, Vector3 position) {
@@ -20,6 +15,8 @@ void Player::Initialize(Model* model, uint32_t& textureHandle, Vector3 position)
 	
 
 	model_ = model;
+
+	Model* model = new Model();
 	textureHandle_ = textureHandle;
 
 	worldTransform_.Initialize();
@@ -33,10 +30,19 @@ void Player::Initialize(Model* model, uint32_t& textureHandle, Vector3 position)
 	worldTransform_.translate = MatrixTransform::VectorAdd(worldTransform_.translate, position);
 	worldTransform3DReticle_.Initialize();
 
-	//uint32_t textureReticle = TextureManager::Load("Reticle.png");
+	Model* AwinModel = nullptr;
+	uint32_t texHandle_ = TextureManager::LoadTexture("Resource/awin/tex.png");
 
-	/*sprite2DReticle_ =
-		Sprite::Create(textureReticle, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.5f, 0.5f });*/
+	AwinModel->CreateFromObj("Resource/awin");
+
+	uint32_t textureReticle = TextureManager::LoadTexture("Resource/reticle.png");
+
+	sprite2DReticle_->Initialize(new SpriteBoxState, { 640.0f, 360.0f },{500.0f,200.0f});
+	sprite2DReticle_->SetTexHandle(textureReticle);
+	sprite2DReticle_->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+
+
+
 }
 
 void Player::Update(const ViewProjection viewProjection) {
@@ -81,8 +87,9 @@ void Player::Update(const ViewProjection viewProjection) {
 	// ベクターの加算
 	worldTransform_.translate = MatrixTransform::VectorAdd(worldTransform_.translate, move);
 	// アフィン変換行列の作成
-	//worldTransform_.matWorld_ = MakeAffineMatrix(
-	   // worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
+	worldTransform_.matWorld = MatrixTransform::AffineMatrix(
+	   worldTransform_.scale, worldTransform_.rotation, worldTransform_.translate);
+
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
@@ -116,9 +123,9 @@ void Player::Update(const ViewProjection viewProjection) {
 // 回転
 void Player::Rotate() {
 
-	XINPUT_STATE Gamepad;
+	XINPUT_STATE GameController;
 
-	if (Gamepad.Gamepad.wButtons & XINPUT_GAMEPAD_A) {//LTボタンに設定する
+	if (GameController.Gamepad.bRightTrigger > 30.0f) {//LTボタンに設定する
 
 		worldTransform_.rotation.y += 0.2f;
 
@@ -137,34 +144,34 @@ void Player::Rotate() {
 
 // 攻撃
 void Player::Attack() {
-	XINPUT_STATE Gamepad;
-	if (Gamepad.Gamepad.wButtons & XINPUT_GAMEPAD_B) {
+	XINPUT_STATE GameController;
+	if (GameController.Gamepad.wButtons & XINPUT_GAMEPAD_B) {
 		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);
 
-		//velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+		velocity = VectorTransform::TransformNormal(velocity, worldTransform_.matWorld);
 
-		/*velocity = MatrixTransform: Subtract(
-			{ worldTransform3DReticle_.matWorld_.m[3][0], worldTransform3DReticle_.matWorld_.m[3][1],
-			 worldTransform3DReticle_.matWorld_.m[3][2] },
+		velocity = MatrixTransform::Subtract(
+			{ worldTransform3DReticle_.matWorld.m[3][0], worldTransform3DReticle_.matWorld.m[3][1],
+			 worldTransform3DReticle_.matWorld.m[3][2] },
 			GetWorldPosition());
-		velocity = Multiply(kBulletSpeed, Normalize(velocity));*/
+		velocity = MatrixTransform::VectorMultiply(kBulletSpeed,MatrixTransform::Normalize(velocity));
 
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initilize(model_, GetWorldPosition(), velocity);
 		bullets_.push_back(newBullet);
 	}
 
-	if (Input::GetInstance()->GetJoystickState(Gamepad))
+	if (Input::GetInstance()->GetJoystickState(GameController))
 	{
 		return;
 	}
 
-	if (Gamepad.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+	if (GameController.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
 		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);
 
-		// velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+		velocity =VectorTransform::TransformNormal(velocity, worldTransform_.matWorld);
 
 		velocity = MatrixTransform::Subtract(
 			{ worldTransform3DReticle_.matWorld.m[3][0], worldTransform3DReticle_.matWorld.m[3][1],
@@ -180,7 +187,7 @@ void Player::Attack() {
 
 void Player::Draw(ViewProjection& viewProjection_) {
 	model_->Draw(worldTransform_, viewProjection_);
-	// bullet_->Draw(viewProjection_);
+	//bullets_->Draw(viewProjection_);
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(viewProjection_);
 	}

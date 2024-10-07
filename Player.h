@@ -12,6 +12,13 @@
 #include "CollisionManager.h"
 #include <list>
 
+
+#include <cassert>
+#include "MatrixTransform.h"
+#include "ImGuiManager.h"
+#include "GameScene.h"
+#include "VectorTransform.h"
+
 /// <summary>
 /// 自キャラ
 /// </summary>
@@ -72,6 +79,7 @@ private:
 	Input* input_ = nullptr;
 
 	WorldTransform worldTransform3DReticle_;
+	WorldTransform worldTransform2DReticle_ = {};
 	Sprite* sprite2DReticle_ = nullptr;
 
 	// リスト

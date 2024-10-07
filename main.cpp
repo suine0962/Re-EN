@@ -1,10 +1,18 @@
 ﻿#include"Suine.h"
 #include "Player.h"
 #include "Enemy.h"
-
+#include "GameManager.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+
+	GameManager*gameManager=nullptr;
+	gameManager = new GameManager();
+
+
+
+	
+
 	Vector4 color;
 
 	color = { 1,1,1,1 };
@@ -49,11 +57,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	WorldTransform SpriteWorldTransform = {};
 	SpriteWorldTransform.Initialize();
 	SpriteWorldTransform.translate = { 0,0,0 };
+
 	WorldTransform worldTransform = {};
 	worldTransform.Initialize();
+
 	WorldTransform uvTransform = {};
 	uvTransform.Initialize();
 	uvTransform.translate = { 0,0,0 };
+
 	WorldTransform ParticleTransform = {};
 	ParticleTransform.Initialize();
 	ParticleTransform.translate = { 0.0f,0.0f,-15.0f };
@@ -74,6 +85,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	while (true)
 	{
+		gameManager->Run();
+
 		if (WinApp::GetInstance()->ProcessMessage()) {
 			// ゲームループを抜ける
 			break;
@@ -181,6 +194,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 
 		Suine::EndFlame();
+
+
+
 
 	}
 
