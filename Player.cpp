@@ -12,11 +12,11 @@ Player::~Player() {
 void Player::Initialize(Model* model, uint32_t& textureHandle, Vector3 position) {
 	assert(model);
 
-	
+	model_ = new Model();
 
 	model_ = model;
 
-	Model* model = new Model();
+	
 	textureHandle_ = textureHandle;
 
 	worldTransform_.Initialize();
@@ -30,10 +30,7 @@ void Player::Initialize(Model* model, uint32_t& textureHandle, Vector3 position)
 	worldTransform_.translate = MatrixTransform::VectorAdd(worldTransform_.translate, position);
 	worldTransform3DReticle_.Initialize();
 
-	Model* AwinModel = nullptr;
-	uint32_t texHandle_ = TextureManager::LoadTexture("Resource/awin/tex.png");
-
-	AwinModel->CreateFromObj("Resource/awin");
+	model_->CreateFromObj("Resource/awin");
 
 	uint32_t textureReticle = TextureManager::LoadTexture("Resource/reticle.png");
 
@@ -113,21 +110,27 @@ void Player::Update(const ViewProjection viewProjection) {
 	const float kMoveLimitX = 34;
 	const float kMoveLimitY = 18;
 
-	//// 範囲を超えない処理
-	//worldTransform_.translate.x = max(worldTransform_.translation_.x, -kMoveLimitX);
-	//worldTransform_.translate.x = min(worldTransform_.translation_.x, +kMoveLimitX);
-	//worldTransform_.translate.y = max(worldTransform_.translation_.y, -kMoveLimitY);
-	//worldTransform_.translate.y = min(worldTransform_.translation_.y, +kMoveLimitY);
+	// 範囲を超えない処理
+	worldTransform_.translate.x = max(worldTransform_.translate.x, -kMoveLimitX);
+	worldTransform_.translate.x = min(worldTransform_.translate.x, +kMoveLimitX);
+	worldTransform_.translate.y = max(worldTransform_.translate.y, -kMoveLimitY);
+	worldTransform_.translate.y = min(worldTransform_.translate.y, +kMoveLimitY);
 }
 
 // 回転
 void Player::Rotate() {
 
 	XINPUT_STATE GameController;
+	Input::GetInstance()->GetJoystickState(GameController);
+	float RotateSpeed=0.1f;
 
 	if (GameController.Gamepad.bRightTrigger > 30.0f) {//LTボタンに設定する
 
-		worldTransform_.rotation.y += 0.2f;
+		worldTransform_.rotation.y +=RotateSpeed;
+		if (worldTransform_.rotation.y > 0.9)
+		{
+			RotateSpeed = 0.0f;
+		}
 
 	}
 	
@@ -145,6 +148,7 @@ void Player::Rotate() {
 // 攻撃
 void Player::Attack() {
 	XINPUT_STATE GameController;
+	Input::GetInstance()->GetJoystickState(GameController);
 	if (GameController.Gamepad.wButtons & XINPUT_GAMEPAD_B) {
 		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);
@@ -167,22 +171,6 @@ void Player::Attack() {
 		return;
 	}
 
-	if (GameController.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
-		const float kBulletSpeed = 1.0f;
-		Vector3 velocity(0, 0, kBulletSpeed);
-
-		velocity =VectorTransform::TransformNormal(velocity, worldTransform_.matWorld);
-
-		velocity = MatrixTransform::Subtract(
-			{ worldTransform3DReticle_.matWorld.m[3][0], worldTransform3DReticle_.matWorld.m[3][1],
-			 worldTransform3DReticle_.matWorld.m[3][2] },
-			GetWorldPosition());
-		velocity = MatrixTransform::VectorMultiply(kBulletSpeed,MatrixTransform::Normalize(velocity));
-
-		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initilize(model_, GetWorldPosition(), velocity);
-		bullets_.push_back(newBullet);
-	}
 }
 
 void Player::Draw(ViewProjection& viewProjection_) {

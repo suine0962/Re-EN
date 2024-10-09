@@ -11,7 +11,7 @@
 #include "CollisionConfig.h"
 #include "CollisionManager.h"
 #include <list>
-
+#include <algorithm>
 
 #include <cassert>
 #include "MatrixTransform.h"

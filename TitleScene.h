@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "IScene.h"
+#include "Player.h"
 
 class TitleScene : public IScene {
 public:
@@ -30,5 +31,9 @@ public:
 private:
     bool gameCloseFlag_;
     int sceneNo_;
+    Player* player_ = nullptr;
+    Model* model_ = nullptr;
+    WorldTransform worldTransform_;
+    ViewProjection view_;
 };
 

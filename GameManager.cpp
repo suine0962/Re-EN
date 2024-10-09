@@ -18,6 +18,9 @@ GameManager::GameManager() {
 
 GameManager::~GameManager() {
     // シーンのリリース（ユニークポインタが自動でクリーンアップ）
+
+
+
 }
 
 int GameManager::Run() {
@@ -29,7 +32,7 @@ int GameManager::Run() {
 
     Particle* particle = new Particle();
     
-    DirectionalLight directionalLight;
+    //DirectionalLight directionalLight;
 
 
     // 各シーンの初期化
@@ -43,7 +46,6 @@ int GameManager::Run() {
             break;
 
         }
-
         Suine::BeginFlame();
 
         input->Update();

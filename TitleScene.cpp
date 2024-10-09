@@ -10,19 +10,27 @@ TitleScene::~TitleScene() {}
 // 初期化処理
 void TitleScene::Init() {
     // タイトルシーンの初期化処理
-   
+    model_ = new Model();
+    uint32_t texHandle_ = TextureManager::LoadTexture("Resource/awin/tex.png");
+    player_ = new Player();
+    Vector3 PlayerPosition = { 0,0,30 };
+
+
+    player_->Initialize(model_, texHandle_, PlayerPosition);
 }
 
 // 更新処理
 void TitleScene::Update() {
     // タイトルシーンの更新処理
   
+    player_->Update(view_);
+
 }
 
 // 描画処理
 void TitleScene::Draw() {
     // タイトルシーンの描画処理
-    
+    player_->Draw(view_);
 }
 
 // リソースの解放処理
