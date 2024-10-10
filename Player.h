@@ -19,6 +19,8 @@
 #include "GameScene.h"
 #include "VectorTransform.h"
 
+
+
 /// <summary>
 /// 自キャラ
 /// </summary>
@@ -62,9 +64,9 @@ public:
 
 	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 
-	/*void SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
+	//void SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
 
-	void SetReticle(const ViewProjection viewProjection);*/
+	void SetReticle(const ViewProjection viewProjection);
 
 private:
 	// ワールド変換データ

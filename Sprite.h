@@ -50,7 +50,9 @@ public:
 	/// <summary>
 	/// GetSpritePos
 	/// </summary>
-	Vector2 GetPos() { return Pos_; }
+	const Vector2 GetPos() const { return Pos_; }
+
+	Vector2 Setpos(const Vector2& Position);
 	/// <summary>
 	/// GetSpriteSize
 	/// </summary>

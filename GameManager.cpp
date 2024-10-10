@@ -7,6 +7,7 @@
 #include "GraphicsPipelineManager.h"
 #include <Windows.h>
 #include "Suine.h"
+//#include "DirectionalLight.h"
 
 // コンストラクタ
 GameManager::GameManager() {
@@ -32,7 +33,7 @@ int GameManager::Run() {
 
     Particle* particle = new Particle();
     
-    //DirectionalLight directionalLight;
+    DirectionalLight directionalLight = {};
 
 
     // 各シーンの初期化

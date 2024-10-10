@@ -98,7 +98,7 @@ void Player::Update(const ViewProjection viewProjection) {
 		bullet->Update();
 	}
 
-	//SetReticle(viewProjection);
+	SetReticle(viewProjection);
 
 	float imputFloat3[3] = {
 		worldTransform_.translate.x, worldTransform_.translate.y,
@@ -199,74 +199,74 @@ Vector3 Player::GetWorldPosition() {
 	return worldPosition;
 }
 
-//void Player::SetReticle(const ViewProjection viewProjection) {
-//	const float kDistancePlayerTo3DReticle = 50.0f;
-//	Vector3 offset = { 0, 0, 1.0f };
-//
-//	offset = TransformNormal(offset, worldTransform_.matWorld_);
-//	offset = Multiply(kDistancePlayerTo3DReticle, Normalize(offset));
-//
-//	worldTransform3DReticle_.translation_ = Add(GetWorldPosition(), offset);
-//	worldTransform3DReticle_.UpdateMatrix();
-//
-//	Vector3 positionReticle = {
-//		worldTransform3DReticle_.matWorld_.m[3][0], worldTransform3DReticle_.matWorld_.m[3][1],
-//		worldTransform3DReticle_.matWorld_.m[3][2] };
-//
-//	Matrix4x4 matViewport =
-//		MakeViewPortMatrix(0.0f, 0.0f, WinApp::kWindowWidth, WinApp::kWindowHeight, 0.0f, 1.0f);
-//
-//	Matrix4x4 matViewProjectionViewport =
-//		Multiply(Multiply(viewProjection.matView, viewProjection.matProjection), matViewport);
-//	positionReticle = Transform(positionReticle, matViewProjectionViewport);
-//	//sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
-//
-//
-//	 // マウス用　一時削除
-//	/* POINT mousePosition;
-//
-//	 GetCursorPos(&mousePosition);
-//
-//	 HWND hwnd = WinApp::GetInstance()->GetHwnd();
-//	 ScreenToClient(hwnd, &mousePosition);
-//	 sprite2DReticle_->SetPosition({(float)mousePosition.x, (float)mousePosition.y});*/
-//
-//	XINPUT_STATE joyState;
-//	Vector2 spritePosition = sprite2DReticle_->GetPosition();
-//
-//	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
-//		spritePosition.x += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 5.0f;
-//		spritePosition.y -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * 5.0f;
-//
-//		sprite2DReticle_->SetPosition(spritePosition);
-//	}
-//
-//	Matrix4x4 matVPV = Multiply(Multiply(viewProjection.matView, viewProjection.matProjection), matViewport);
-//	Matrix4x4 matInverseVPV = Inverse(matVPV);
-//
-//	Vector3 posNear = {
-//		(float)sprite2DReticle_->GetPosition().x, (float)sprite2DReticle_->GetPosition().y, 0 };
-//
-//	Vector3 posFar = {
-//		(float)sprite2DReticle_->GetPosition().x, (float)sprite2DReticle_->GetPosition().y, 1 };
-//
-//	posNear = Transform(posNear, matInverseVPV);
-//	posFar = Transform(posFar, matInverseVPV);
-//
-//	Vector3 mouseDirection = Subtract(posFar, posNear);
-//	mouseDirection = Normalize(mouseDirection);
-//
-//	const float kDistancetestObject = 100.0f;
-//
-//	worldTransform3DReticle_.translation_ =
-//		Add(posNear, Multiply(kDistancetestObject, mouseDirection));
-//	worldTransform3DReticle_.UpdateMatrix();
-//
-//	ImGui::Begin("Player");
-//	ImGui::Text("Near:(%+.2f,%+.2f,%.2f)", posNear.x, posNear.y, posNear.z);
-//	ImGui::Text("Far:(%+.2f,%+.2f,%.2f)", posFar.x, posFar.y, posFar.z);
-//	ImGui::Text(
-//		"3DRetixle:(%+.2f,%+.2f,%.2f)", worldTransform3DReticle_.translation_.x,
-//		worldTransform3DReticle_.translation_.y, worldTransform3DReticle_.translation_.z);
-//	ImGui::End();
-//}
+void Player::SetReticle(const ViewProjection viewProjection) {
+	const float kDistancePlayerTo3DReticle = 50.0f;
+	Vector3 offset = { 0, 0, 1.0f };
+
+	offset = VectorTransform::TransformNormal(offset, worldTransform_.matWorld);
+	offset =MatrixTransform::VectorMultiply(kDistancePlayerTo3DReticle,MatrixTransform::Normalize(offset));
+
+	worldTransform3DReticle_.translate =MatrixTransform::VectorAdd(GetWorldPosition(), offset);
+	worldTransform3DReticle_.UpdateMatrix();
+
+	Vector3 positionReticle = {
+		worldTransform3DReticle_.matWorld.m[3][0], worldTransform3DReticle_.matWorld.m[3][1],
+		worldTransform3DReticle_.matWorld.m[3][2] };
+
+	Matrix4x4 matViewport = MatrixTransform::ViewportMatrix(0.0f, 0.0f, WinApp::kClientWidth_, WinApp::kClientHeight_
+		, 0.0f, 1.0f);
+
+	Matrix4x4 matViewProjectionViewport =
+		MatrixTransform::Multiply(MatrixTransform::Multiply(viewProjection.matView_, viewProjection.matProjection_), matViewport);
+	positionReticle =VectorTransform::Transform(positionReticle, matViewProjectionViewport);
+	//sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
+
+
+	 // マウス用　一時削除
+	/* POINT mousePosition;
+
+	 GetCursorPos(&mousePosition);
+
+	 HWND hwnd = WinApp::GetInstance()->GetHwnd();
+	 ScreenToClient(hwnd, &mousePosition);
+	 sprite2DReticle_->SetPosition({(float)mousePosition.x, (float)mousePosition.y});*/
+
+	XINPUT_STATE joyState;
+	Vector2 spritePosition = sprite2DReticle_->GetPos();
+
+	if (Input::GetInstance()->GetJoystickState(joyState)) {
+		spritePosition.x += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 5.0f;
+		spritePosition.y -= (float)joyState.Gamepad.sThumbRY / SHRT_MAX * 5.0f;
+
+		sprite2DReticle_->Setpos(spritePosition);
+	}
+
+	Matrix4x4 matVPV =MatrixTransform::Multiply(MatrixTransform::Multiply(viewProjection.matView_, viewProjection.matProjection_), matViewport);
+	Matrix4x4 matInverseVPV =MatrixTransform::Inverse(matVPV);
+
+	Vector3 posNear = {
+		(float)sprite2DReticle_->GetPos().x, (float)sprite2DReticle_->GetPos().y, 0 };
+
+	Vector3 posFar = {
+		(float)sprite2DReticle_->GetPos().x, (float)sprite2DReticle_->GetPos().y, 1 };
+
+	posNear =VectorTransform::Transform(posNear, matInverseVPV);
+	posFar =VectorTransform::Transform(posFar, matInverseVPV);
+
+	Vector3 mouseDirection =MatrixTransform::Subtract(posFar, posNear);
+	mouseDirection =MatrixTransform::Normalize(mouseDirection);
+
+	const float kDistancetestObject = 100.0f;
+
+	worldTransform3DReticle_.translate =
+	MatrixTransform::VectorAdd(posNear,MatrixTransform::VectorMultiply(kDistancetestObject, mouseDirection));
+	worldTransform3DReticle_.UpdateMatrix();
+
+	/*ImGui::Begin("Player");
+	ImGui::Text("Near:(%+.2f,%+.2f,%.2f)", posNear.x, posNear.y, posNear.z);
+	ImGui::Text("Far:(%+.2f,%+.2f,%.2f)", posFar.x, posFar.y, posFar.z);
+	ImGui::Text(
+		"3DRetixle:(%+.2f,%+.2f,%.2f)", worldTransform3DReticle_.translation_.x,
+		worldTransform3DReticle_.translation_.y, worldTransform3DReticle_.translation_.z);
+	ImGui::End();*/
+}
