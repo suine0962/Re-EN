@@ -108,7 +108,7 @@ void DirectXCommon::UpdataFPS()
 		while (std::chrono::steady_clock::now()-reference_<kminTime)
 		{
 			//1秒μスリープ
-			std::this_thread::sleep_for(std::chrono::microseconds(1));
+			//std::this_thread::sleep_for(std::chrono::microseconds(1));
 		}
 	}
 	//現在の時間を記録する

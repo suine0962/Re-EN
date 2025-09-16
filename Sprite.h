@@ -52,7 +52,7 @@ public:
 	/// </summary>
 	const Vector2 GetPos() const { return Pos_; }
 
-	Vector2 Setpos(const Vector2& Position);
+	Vector2 Setpos(const Vector2& Position) { return Position; }
 	/// <summary>
 	/// GetSpriteSize
 	/// </summary>
